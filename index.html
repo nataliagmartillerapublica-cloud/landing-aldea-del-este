@@ -1,13 +1,3 @@
-<!--
-  index.html (standalone)
-  Landing de propiedad en Aldea del Este sin dependencias de React.
-  - Estilos: Tailwind CDN.
-  - Funcional: Modal rápido de WhatsApp (captura nombre y abre chat).
-  - Por ahora NO guarda leads (Sheets lo agregamos luego).
-  - Sube una carpeta /img con: portada.jpg, living.jpg, dormitorio.jpg, cocina.jpg, galeria.jpg, vista.jpg
-  Accesibilidad: foco visible, alto contraste, etiquetas semánticas básicas.
--->
-
 <!doctype html>
 <html lang="es">
   <head>
@@ -19,17 +9,16 @@
     <meta name="color-scheme" content="light only" />
     <style>
       :root {
+        /* Ajustá sólo estos colores para tu marca */
         --bg: #f8fafc;         /* slate-50 */
         --ink: #0f172a;        /* slate-900 */
         --accent: #111827;     /* gray-900 */
-        --brand: #0ea5e9;      /* sky-500 */
-        --brand-ink: #ffffff;  /* white */
+        --brand: #0ea5e9;      /* BRAND COLOR → pasame el HEX y lo pongo aquí */
+        --brand-ink: #ffffff;  /* Blanco sobre el brand */
         --line: #e5e7eb;       /* gray-200 */
         --muted: #6b7280;      /* gray-500 */
       }
-      .container-w {
-        max-width: 1100px;
-      }
+      .container-w { max-width: 1100px; }
       /* Transiciones para panel plegable y modal */
       .fade-enter { opacity: 0 }
       .fade-enter-active { opacity: 1; transition: opacity .2s ease }
@@ -46,7 +35,13 @@
           <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[var(--brand)] text-[var(--brand-ink)] font-bold">N</span>
           <div class="leading-tight">
             <div class="font-semibold">Natalia González</div>
-            <div class="text-xs text-[var(--muted)]">Martillera Pública · Bariloche</div>
+            <div class="text-xs text-[var(--muted)]">
+              Martillera y Corredora Pública Mat. Mat. Nº377-RP-21 Fº456 TºII
+            </div>
+            <a href="https://www.ngespacios.com.ar" target="_blank" rel="noopener noreferrer"
+               class="text-xs text-[var(--brand)] underline-offset-2 hover:underline">
+              www.ngespacios.com.ar
+            </a>
           </div>
         </div>
         <nav class="hidden md:flex items-center gap-6 text-sm">
@@ -78,17 +73,17 @@
           </div>
         </div>
 
-        <!-- Grilla de imágenes -->
+        <!-- Grilla de imágenes: todas con el mismo tamaño -->
         <div>
-          <div class="grid grid-cols-3 grid-rows-2 gap-2">
-            <img src="img/portada.jpg" alt="Fachada y jardín – Aldea del Este" class="h-36 w-full rounded-lg object-cover col-span-2 row-span-2">
-            <img src="img/living.jpg" alt="Living con vista al lago" class="h-18 w-full rounded-lg object-cover">
-            <img src="img/dormitorio.jpg" alt="Dormitorio principal" class="h-18 w-full rounded-lg object-cover">
-            <img src="img/cocina.jpg" alt="Cocina" class="h-18 w-full rounded-lg object-cover">
-            <img src="img/galeria.jpg" alt="Galería y jardín" class="h-18 w-full rounded-lg object-cover">
-            <img src="img/vista.jpg" alt="Vista al lago" class="h-18 w-full rounded-lg object-cover">
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+            <img src="img/portada.jpg" alt="Fachada y jardín – Aldea del Este" class="w-full aspect-[16/10] rounded-lg object-cover">
+            <img src="img/living.jpg" alt="Living con vista al lago" class="w-full aspect-[16/10] rounded-lg object-cover">
+            <img src="img/dormitorio.jpg" alt="Dormitorio principal" class="w-full aspect-[16/10] rounded-lg object-cover">
+            <img src="img/cocina.jpg" alt="Cocina" class="w-full aspect-[16/10] rounded-lg object-cover">
+            <img src="img/galeria.jpg" alt="Galería y jardín" class="w-full aspect-[16/10] rounded-lg object-cover">
+            <img src="img/vista.jpg" alt="Vista al lago" class="w-full aspect-[16/10] rounded-lg object-cover">
           </div>
-          <p class="mt-2 text-xs text-[var(--muted)]">Subí estos archivos a /img. Podés cambiar nombres si ajustás los src.</p>
+          <p class="mt-2 text-xs text-[var(--muted)]">Las imágenes se recortan automáticamente para mantener tamaño uniforme.</p>
         </div>
       </section>
 
