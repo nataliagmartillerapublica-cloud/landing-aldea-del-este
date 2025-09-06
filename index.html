@@ -7,32 +7,47 @@
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <meta name="color-scheme" content="light only" />
+    <meta name="description" content="Casa estilo patagónico con vista al lago en Aldea del Este. 4 dormitorios, 190 m² cubiertos, lote 874 m²." />
     <style>
       :root {
         /* Paleta de la marca */
         --bg: #f4f2f2;
         --ink: #363332;
         --accent: #363332;
-        --brand: #572d30;
-        --brand-ink: #ffffff;
+        --brand: #572d30;      /* fondo botón / avatar */
+        --brand-ink: #ffffff;  /* texto sobre brand */
         --line: #e5e7eb;
         --muted: #666666;
       }
       .container-w { max-width: 1100px; }
-      /* Transiciones para panel plegable y modal */
+      /* Transiciones utilitarias */
       .fade-enter { opacity: 0 }
       .fade-enter-active { opacity: 1; transition: opacity .2s ease }
       .collapse { overflow: hidden; transition: max-height .3s ease, opacity .3s ease }
     </style>
-    <meta name="description" content="Casa estilo patagónico con vista al lago en Aldea del Este. 4 dormitorios, 190 m² cubiertos, lote 874 m²." />
+    <!--
+      Archivo: docs/index.html
+      Propósito: Landing estática simple para la propiedad (CTA WhatsApp, Email, Formulario con fallback a mailto y futuro envío a Google Sheets).
+      Accesibilidad: Etiquetas, contrastes y foco visibles.
+      Performance: Imágenes con aspect-ratio y lazy; estilos con Tailwind CDN.
+    -->
   </head>
 
   <body class="min-h-screen bg-[var(--bg)] text-[var(--ink)]">
     <!-- Header de marca -->
-    <header class="border-b border-[var(--line)]">
+    <header class="border-b border-[var(--line)] bg-white/90 backdrop-blur supports-[backdrop-filter]:backdrop-blur">
       <div class="mx-auto container-w px-4 py-3 md:px-6 flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[var(--brand)] text-[var(--brand-ink)] font-bold">N</span>
+          <!-- Avatar SVG “NG” (no requiere imagen externa) -->
+          <span class="inline-block select-none shadow-sm rounded-full" style="width: 32px; height: 32px; line-height: 0">
+            <svg width="32" height="32" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+              <circle cx="50" cy="50" r="50" fill="var(--brand)" />
+              <text x="50" y="54" text-anchor="middle" dominant-baseline="middle"
+                    font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif"
+                    font-size="52" font-weight="400" fill="var(--brand-ink)" lengthAdjust="spacing" textLength="62">NG</text>
+            </svg>
+          </span>
+
           <div class="leading-tight">
             <div class="font-semibold">Natalia González</div>
             <div class="text-xs text-[var(--muted)]">
@@ -44,6 +59,7 @@
             </a>
           </div>
         </div>
+
         <nav class="hidden md:flex items-center gap-6 text-sm">
           <a href="#consultas" class="hover:underline">Consultas</a>
           <a href="#mapa" class="hover:underline">Ubicación</a>
@@ -73,15 +89,15 @@
           </div>
         </div>
 
-        <!-- Grilla de imágenes: todas con el mismo tamaño -->
+        <!-- Grilla de imágenes -->
         <div>
           <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
-            <img src="img/portada.jpg" alt="Fachada y jardín – Aldea del Este" class="w-full aspect-[4/3] rounded-lg object-cover">
-            <img src="img/living.jpg" alt="Living con vista al lago" class="w-full aspect-[4/3] rounded-lg object-cover">
-            <img src="img/dormitorio.jpg" alt="Dormitorio principal" class="w-full aspect-[4/3] rounded-lg object-cover">
-            <img src="img/cocina.jpg" alt="Cocina" class="w-full aspect-[4/3] rounded-lg object-cover">
-            <img src="img/galeria.jpg" alt="Galería y jardín" class="w-full aspect-[4/3] rounded-lg object-cover">
-            <img src="img/vista.jpg" alt="Vista al lago" class="w-full aspect-[4/3] rounded-lg object-cover">
+            <img src="img/portada.jpg" alt="Fachada y jardín – Aldea del Este" class="w-full aspect-[4/3] rounded-lg object-cover" loading="lazy">
+            <img src="img/living.jpg" alt="Living con vista al lago" class="w-full aspect-[4/3] rounded-lg object-cover" loading="lazy">
+            <img src="img/dormitorio.jpg" alt="Dormitorio principal" class="w-full aspect-[4/3] rounded-lg object-cover" loading="lazy">
+            <img src="img/cocina.jpg" alt="Cocina" class="w-full aspect-[4/3] rounded-lg object-cover" loading="lazy">
+            <img src="img/galeria.jpg" alt="Galería y jardín" class="w-full aspect-[4/3] rounded-lg object-cover" loading="lazy">
+            <img src="img/vista.jpg" alt="Vista al lago" class="w-full aspect-[4/3] rounded-lg object-cover" loading="lazy">
           </div>
           <p class="mt-2 text-xs text-[var(--muted)]">Las imágenes mantienen tamaño uniforme (4:3).</p>
         </div>
@@ -92,23 +108,23 @@
         <h2 class="mb-3 text-xl font-semibold">Datos clave</h2>
         <div class="grid grid-cols-2 gap-3 md:grid-cols-5">
           <div class="rounded-2xl border border-[var(--line)] bg-white p-3">
-            <div class="text-sm text-[var(--muted)] flex items-center gap-2"><span>🛏️</span>Dormitorios</div>
+            <div class="text-sm text-[var(--muted)] flex items-center gap-2"><span aria-hidden="true">🛏️</span><span>Dormitorios</span></div>
             <div class="text-[15px] font-semibold mt-1">4 + escritorio</div>
           </div>
           <div class="rounded-2xl border border-[var(--line)] bg-white p-3">
-            <div class="text-sm text-[var(--muted)] flex items-center gap-2"><span>🛁</span>Baños</div>
+            <div class="text-sm text-[var(--muted)] flex items-center gap-2"><span aria-hidden="true">🛁</span><span>Baños</span></div>
             <div class="text-[15px] font-semibold mt-1">2</div>
           </div>
           <div class="rounded-2xl border border-[var(--line)] bg-white p-3">
-            <div class="text-sm text-[var(--muted)] flex items-center gap-2"><span>🚗</span>Cocheras</div>
+            <div class="text-sm text-[var(--muted)] flex items-center gap-2"><span aria-hidden="true">🚗</span><span>Cocheras</span></div>
             <div class="text-[15px] font-semibold mt-1">2</div>
           </div>
           <div class="rounded-2xl border border-[var(--line)] bg-white p-3">
-            <div class="text-sm text-[var(--muted)] flex items-center gap-2"><span>📏</span>Cubiertos</div>
+            <div class="text-sm text-[var(--muted)] flex items-center gap-2"><span aria-hidden="true">📏</span><span>Cubiertos</span></div>
             <div class="text-[15px] font-semibold mt-1">190 m²</div>
           </div>
           <div class="rounded-2xl border border-[var(--line)] bg-white p-3">
-            <div class="text-sm text-[var(--muted)] flex items-center gap-2"><span>🏡</span>Lote</div>
+            <div class="text-sm text-[var(--muted)] flex items-center gap-2"><span aria-hidden="true">🏡</span><span>Lote</span></div>
             <div class="text-[15px] font-semibold mt-1">874 m²</div>
           </div>
         </div>
@@ -148,7 +164,7 @@
         </div>
       </section>
 
-      <!-- INFORMACIÓN COMERCIAL + CTA -->
+      <!-- INFORMACIÓN COMERCIAL + CTA + FORM -->
       <section id="consultas" class="mt-8">
         <h2 class="mb-3 text-xl font-semibold">Información comercial</h2>
         <div class="rounded-2xl border border-[var(--line)] bg-white p-4">
@@ -170,214 +186,263 @@
           <div class="mt-3 flex flex-col gap-3 sm:flex-row">
             <a id="waCta"
                href="#"
-               class="inline-flex items-center justify-center rounded-full bg-[var(--brand)] px-5 py-3 text-sm font-semibold text-[var(--brand-ink)] transition hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2">
+               class="inline-flex items-center justify-center rounded-full bg-[var(--brand)] px-5 py-3 text-sm font-semibold text-[var(--brand-ink)] hover:opacity-95">
               Escribime por WhatsApp
             </a>
-            <button id="emailToggle"
-               type="button"
+            <a id="emailCta"
+               href="#"
                class="inline-flex items-center justify-center rounded-full border border-[var(--ink)] px-5 py-3 text-sm font-medium text-[var(--ink)] hover:bg-black/5">
               Prefiero contacto por email
+            </a>
+            <button id="formToggleBtn"
+               class="inline-flex items-center justify-center rounded-full border border-[var(--ink)] px-5 py-3 text-sm font-medium text-[var(--ink)] hover:bg-black/5">
+              Completar formulario
             </button>
           </div>
 
-          <!-- Panel plegable con el formulario por email (placeholder) -->
-          <div id="emailPanel" class="collapse max-h-0 opacity-0 mt-3">
-            <form class="rounded-2xl border border-[var(--line)] bg-white p-4 md:p-5" onsubmit="return false" aria-label="Formulario de contacto por email">
-              <div class="mb-3 rounded-lg border border-amber-300 bg-amber-50 p-3 text-xs text-amber-900">
-                Próximamente conectaremos este formulario a Google Sheets / Formspree. Por ahora no envía.
+          <!-- Panel del formulario (plegable) -->
+          <div id="formPanel" class="collapse mt-4 rounded-xl border border-[var(--line)] bg-white/60 max-h-0 opacity-0">
+            <form id="leadForm" class="grid grid-cols-1 gap-3 p-4">
+              <!-- Nombre -->
+              <div>
+                <label for="name" class="block text-xs font-medium text-[var(--muted)]">Nombre y apellido</label>
+                <input id="name" name="name" type="text" required
+                  class="mt-1 w-full rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[var(--accent)]"
+                  placeholder="Tu nombre" />
               </div>
 
-              <div class="mb-3">
-                <label for="name" class="mb-1 block text-sm font-medium text-[var(--accent)]">Nombre completo <span class="text-red-600">*</span></label>
-                <input id="name" type="text" class="w-full rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[var(--brand)]" placeholder="Tu nombre" autocomplete="name" required />
+              <!-- Email -->
+              <div>
+                <label for="email" class="block text-xs font-medium text-[var(--muted)]">Email</label>
+                <input id="email" name="email" type="email" required
+                  class="mt-1 w-full rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[var(--accent)]"
+                  placeholder="tucorreo@ejemplo.com" />
               </div>
 
-              <div class="mb-3">
-                <label for="email" class="mb-1 block text-sm font-medium text-[var(--accent)]">Email <span class="text-red-600">*</span></label>
-                <input id="email" type="email" class="w-full rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[var(--brand)]" placeholder="nombre@correo.com" autocomplete="email" required />
+              <!-- Teléfono -->
+              <div>
+                <label for="phone" class="block text-xs font-medium text-[var(--muted)]">WhatsApp / Teléfono (opcional)</label>
+                <input id="phone" name="phone" type="tel"
+                  class="mt-1 w-full rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[var(--accent)]"
+                  placeholder="Ej: 11 5555-5555" />
               </div>
 
-              <div class="mb-3">
-                <label for="message" class="mb-1 block text-sm font-medium text-[var(--accent)]">Mensaje (opcional)</label>
-                <textarea id="message" rows="4" class="w-full rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[var(--brand)]">Hola, me interesa esta propiedad. Prefiero contacto por email. ¡Gracias!</textarea>
+              <!-- Mensaje -->
+              <div>
+                <label for="message" class="block text-xs font-medium text-[var(--muted)]">Mensaje</label>
+                <textarea id="message" name="message" rows="4" required
+                  class="mt-1 w-full rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[var(--accent)]"
+                  placeholder="Contame cuándo te viene bien visitar o cualquier consulta."></textarea>
               </div>
 
-              <div class="mt-4 flex items-center gap-3">
-                <button type="button" disabled class="inline-flex items-center justify-center rounded-full bg-[var(--brand)] px-5 py-2.5 text-sm font-semibold text-[var(--brand-ink)] opacity-60 cursor-not-allowed">Enviar (próximamente)</button>
-                <span class="text-xs text-[var(--muted)]">Lo activamos cuando tengas el endpoint.</span>
+              <!-- Consentimiento -->
+              <div class="flex items-start gap-2">
+                <input id="consent" name="consent" type="checkbox" required class="mt-0.5" />
+                <label for="consent" class="text-xs text-[var(--muted)]">
+                  Acepto la <a href="#privacidad" class="underline underline-offset-2">política de privacidad</a>.
+                </label>
+              </div>
+
+              <!-- Honeypot (anti-spam simple) -->
+              <div class="hidden" aria-hidden="true">
+                <label for="company">Company</label>
+                <input id="company" name="company" type="text" tabindex="-1" autocomplete="off" />
+              </div>
+
+              <!-- Acciones -->
+              <div class="flex items-center gap-3">
+                <button id="submitBtn" type="submit"
+                  class="inline-flex items-center justify-center rounded-full bg-[var(--brand)] px-5 py-3 text-sm font-semibold text-[var(--brand-ink)] hover:opacity-95">
+                  Enviar consulta
+                </button>
+                <button id="cancelBtn" type="button"
+                  class="inline-flex items-center justify-center rounded-full border border-[var(--ink)] px-5 py-3 text-sm font-medium text-[var(--ink)] hover:bg-black/5">
+                  Cancelar
+                </button>
+                <span id="formStatus" class="text-xs text-[var(--muted)]"></span>
               </div>
             </form>
           </div>
-
-          <p class="mt-2 text-xs text-[var(--muted)]">
-            Coordinamos por WhatsApp para agilizar, pero si preferís email, podés usar el formulario alternativo.
-          </p>
         </div>
       </section>
 
       <!-- MAPA -->
-      <section id="mapa" class="mt-8">
-        <h2 class="mb-3 text-xl">Ubicación aproximada</h2>
-        <div class="rounded-2xl border border-[var(--line)] bg-white p-4">
-          <div class="aspect-[16/10] w-full overflow-hidden rounded-xl border border-[var(--line)]">
-            <iframe id="mapFrame"
-                    title="Mapa"
-                    src=""
-                    loading="lazy"
-                    class="h-full w-full"
-                    referrerpolicy="no-referrer-when-downgrade"
-                    allowfullscreen>
-            </iframe>
-          </div>
-          <p class="mt-2 text-xs text-[var(--muted)]">La ubicación es aproximada. Solicitá la dirección exacta al coordinar la visita.</p>
-          <a id="mapLink"
-             href="#"
-             target="_blank"
-             rel="noopener noreferrer"
-             class="mt-3 inline-flex text-sm font-medium text-[var(--brand)] underline-offset-2 hover:underline">
+      <section id="mapa" class="mt-10">
+        <h2 class="mb-3 text-xl font-semibold">Ubicación aproximada</h2>
+        <div class="rounded-2xl overflow-hidden border border-[var(--line)] bg-white">
+          <iframe
+            title="Mapa - La Morena 4276, Bariloche"
+            src="https://www.google.com/maps?q=La%20Morena%204276%2C%20San%20Carlos%20de%20Bariloche&output=embed"
+            width="100%" height="340" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+        <div class="mt-2">
+          <a class="text-sm text-[var(--brand)] underline-offset-2 hover:underline"
+             target="_blank" rel="noopener"
+             href="https://www.google.com/maps?q=La%20Morena%204276%2C%20San%20Carlos%20de%20Bariloche">
             Abrir en Google Maps
           </a>
         </div>
       </section>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="border-t border-[var(--line)]">
-      <div class="mx-auto container-w px-4 py-4 text-xs text-[var(--muted)] md:px-6">
-        © <span id="year"></span> Natalia González · Martillera Pública. Bariloche.
+    <!-- Footer -->
+    <footer class="mt-10 border-t border-[var(--line)] bg-white">
+      <div class="mx-auto container-w px-4 py-6 md:px-6 text-xs text-[var(--muted)]">
+        © <span id="year"></span> NG Espacios · Bariloche. Información sujeta a verificación. Las superficies son aproximadas.
+        · <a id="privacidad" class="underline underline-offset-2" href="#privacidad">Privacidad</a>
       </div>
     </footer>
 
-    <!-- CTA flotante (mobile) -->
-    <div aria-label="Barra de acción rápida"
-         class="fixed inset-x-0 bottom-0 z-50 md:hidden"
-         style="padding-bottom: max(env(safe-area-inset-bottom), 0px)">
-      <div class="mx-auto w-full container-w px-4 pb-3">
-        <a id="waCtaFloating"
-           href="#"
-           class="block w-full rounded-full border border-transparent bg-[var(--brand)] px-5 py-3 text-center text-sm font-semibold text-[var(--brand-ink)] shadow-sm transition hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2">
-          Escribime por WhatsApp
-        </a>
-      </div>
-    </div>
+    <!-- CTA flotante (solo mobile) -->
+    <a id="waFloat"
+       href="#"
+       class="fixed inset-x-4 bottom-4 sm:hidden inline-flex items-center justify-center rounded-full bg-[var(--brand)] px-5 py-3 text-sm font-semibold text-[var(--brand-ink)] shadow-lg hover:opacity-95">
+      Escribime por WhatsApp
+    </a>
 
-    <!-- Modal WhatsApp Lead -->
-    <div id="waModal" class="fixed inset-0 z-[60] hidden items-end justify-center bg-black/40 p-0 md:items-center md:p-4">
-      <div class="w-full rounded-t-2xl bg-white p-4 shadow-xl md:max-w-md md:rounded-2xl md:p-5">
-        <div class="mb-3">
-          <h3 class="text-lg font-semibold text-[var(--accent)]">Antes de ir a WhatsApp</h3>
-          <p class="mt-1 text-sm text-[var(--muted)]">Dejanos tu nombre para agendar la consulta. Luego abrimos el chat.</p>
-        </div>
-
-        <div class="mb-3">
-          <label for="wa_name" class="mb-1 block text-sm font-medium text-[var(--accent)]">
-            Nombre completo <span class="text-red-600">*</span>
-          </label>
-          <input id="wa_name"
-                 type="text"
-                 class="w-full rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[var(--brand)]"
-                 placeholder="Tu nombre"
-                 autocomplete="name" />
-          <p id="wa_error" class="mt-1 text-xs text-red-600 hidden">Ingresá tu nombre para continuar.</p>
-        </div>
-
-        <div class="mt-4 flex items-center justify-end gap-3">
-          <button type="button" id="waCancel"
-                  class="inline-flex items-center justify-center rounded-full border border-[var(--ink)] px-4 py-2 text-sm font-medium text-[var(--ink)] hover:bg-black/5 focus:outline-none focus:ring-2 focus:ring-[var(--ink)] focus:ring-offset-2">
-            Cancelar
-          </button>
-          <button type="button" id="waContinue"
-                  class="inline-flex items-center justify-center rounded-full bg-[var(--brand)] px-5 py-2.5 text-sm font-semibold text-[var(--brand-ink)] transition hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2">
-            Continuar a WhatsApp
-          </button>
-        </div>
-
-        <p class="mt-2 text-xs text-[var(--muted)]">Sólo usaremos tus datos para coordinar la visita.</p>
-      </div>
-    </div>
-
-    <!-- Script: configuración básica y manejadores -->
     <script>
-      // CONFIG
-      const PHONE = '5492944635083';
-      const PROPERTY_TITLE = 'Casa estilo patagónico – Aldea del Este';
-      const ADDRESS = 'La Morena 4276, San Carlos de Bariloche, Río Negro, Argentina';
+      // Personalización de contacto
+      const WA_NUMBER = "5492944635083"; // Reemplazado según tu indicación (AR móvil)
+      const EMAIL = "nataliagonzalezmartillerapublica@ngespacios.com.ar"; // Tu email
+      const SHEETS_ENDPOINT = ""; // Pegá aquí tu URL de Google Apps Script cuando la tengas (POST JSON)
 
-      // Año dinámico
-      document.getElementById('year').textContent = String(new Date().getFullYear());
+      const title = "Casa estilo patagónico – Aldea del Este";
+      const url = window.location.origin + window.location.pathname;
+      const priceText = (document.getElementById("price")?.textContent || "").trim();
+      const defaultMsg =
+        `Hola, me interesa la propiedad "${title}". ${priceText ? "Precio: " + priceText + ". " : ""}Vi el aviso en ${url}. ¿Podemos coordinar una visita?`;
 
-      // Mapa
-      const encoded = encodeURIComponent(ADDRESS);
-      const mapFrame = document.getElementById('mapFrame');
-      const mapLink = document.getElementById('mapLink');
-      if (mapFrame) mapFrame.src = `https://www.google.com/maps?q=${encoded}&output=embed`;
-      if (mapLink) mapLink.href = `https://www.google.com/maps/search/?api=1&query=${encoded}`;
-
-      // WhatsApp helpers
-      function buildWhatsAppUrl(phone, message) {
-        const base = 'https://wa.me/' + phone;
-        const text = encodeURIComponent(message);
-        return `${base}?text=${text}`;
+      /** Construye link de WhatsApp; si no hay número, usa modo compartir. */
+      function buildWaLink(number, text) {
+        const enc = encodeURIComponent(text);
+        return number ? `https://wa.me/${number}?text=${enc}` : `https://wa.me/?text=${enc}`;
       }
 
-      function openWaWithName(name) {
-        const msg = `Hola, soy ${name}. Me interesa la propiedad "${PROPERTY_TITLE}". ¿Podemos coordinar una visita? (Enviado desde la landing)`;
-        const waUrl = buildWhatsAppUrl(PHONE, msg);
-        window.open(waUrl, '_blank', 'noopener,noreferrer');
+      /** Construye mailto con asunto y cuerpo. */
+      function buildMailto(email, subject, body) {
+        const sub = encodeURIComponent(subject);
+        const bod = encodeURIComponent(body);
+        return `mailto:${email}?subject=${sub}&body=${bod}`;
       }
 
-      // Modal
-      const waModal = document.getElementById('waModal');
-      const waName = document.getElementById('wa_name');
-      const waError = document.getElementById('wa_error');
-      const waCancel = document.getElementById('waCancel');
-      const waContinue = document.getElementById('waContinue');
-
-      function showModal() {
-        waModal.classList.remove('hidden');
-        waModal.classList.add('flex');
-        setTimeout(() => waName && waName.focus(), 50);
-      }
-      function hideModal() {
-        waModal.classList.remove('flex');
-        waModal.classList.add('hidden');
+      /** Muestra estado simple junto al botón de envío. */
+      function setStatus(text, type = "info") {
+        const el = document.getElementById("formStatus");
+        if (!el) return;
+        el.textContent = text;
+        el.className = "text-xs " + (type === "error" ? "text-red-600" : type === "success" ? "text-green-600" : "text-[var(--muted)]");
       }
 
-      // CTA handlers
-      function onWaClick(e) {
-        e.preventDefault();
-        showModal();
-      }
-      document.getElementById('waCta')?.addEventListener('click', onWaClick);
-      document.getElementById('waCtaFloating')?.addEventListener('click', onWaClick);
-
-      waCancel?.addEventListener('click', hideModal);
-      waContinue?.addEventListener('click', () => {
-        const name = (waName?.value || '').trim();
-        if (!name || name.length < 2) {
-          waError?.classList.remove('hidden');
-          waName?.focus();
-          return;
-        }
-        waError?.classList.add('hidden');
-        openWaWithName(name);
-        hideModal();
-      });
-
-      // Email panel toggle
-      const emailToggle = document.getElementById('emailToggle');
-      const emailPanel = document.getElementById('emailPanel');
-      let emailOpen = false;
-      emailToggle?.addEventListener('click', () => {
-        emailOpen = !emailOpen;
-        if (emailOpen) {
-          emailPanel.style.maxHeight = '1200px';
-          emailPanel.style.opacity = '1';
+      /** Expande o colapsa un panel con clase .collapse */
+      function togglePanel(panel, expand) {
+        if (!panel) return;
+        if (expand) {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+          panel.style.opacity = "1";
         } else {
-          emailPanel.style.maxHeight = '0px';
-          emailPanel.style.opacity = '0';
+          panel.style.maxHeight = "0px";
+          panel.style.opacity = "0";
         }
-      });
+      }
+
+      // Aplica hrefs de CTA
+      const waHref = buildWaLink(WA_NUMBER, defaultMsg);
+      const mailHref = buildMailto(EMAIL, `Consulta: ${title}`, defaultMsg);
+      const waCta = document.getElementById("waCta");
+      const waFloat = document.getElementById("waFloat");
+      const emailCta = document.getElementById("emailCta");
+      if (waCta) waCta.href = waHref;
+      if (waFloat) waFloat.href = waHref;
+      if (emailCta) emailCta.href = mailHref;
+
+      // Año en footer
+      const yearEl = document.getElementById("year");
+      if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+      // Lógica del formulario
+      const formPanel = document.getElementById("formPanel");
+      const formToggleBtn = document.getElementById("formToggleBtn");
+      const leadForm = document.getElementById("leadForm");
+      const cancelBtn = document.getElementById("cancelBtn");
+      let formOpen = false;
+
+      if (formToggleBtn && formPanel) {
+        formToggleBtn.addEventListener("click", () => {
+          formOpen = !formOpen;
+          togglePanel(formPanel, formOpen);
+          formToggleBtn.textContent = formOpen ? "Ocultar formulario" : "Completar formulario";
+        });
+      }
+
+      if (cancelBtn && formPanel) {
+        cancelBtn.addEventListener("click", () => {
+          formOpen = false;
+          togglePanel(formPanel, false);
+          formToggleBtn.textContent = "Completar formulario";
+          if (leadForm) leadForm.reset();
+          setStatus("");
+        });
+      }
+
+      if (leadForm) {
+        leadForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          setStatus("Enviando…");
+
+          const data = {
+            name: leadForm.name.value.trim(),
+            email: leadForm.email.value.trim(),
+            phone: leadForm.phone.value.trim(),
+            message: leadForm.message.value.trim(),
+            consent: leadForm.consent.checked,
+            company: leadForm.company?.value || "",
+            title,
+            price: priceText,
+            page: url,
+            ts: new Date().toISOString()
+          };
+
+          // Validación básica
+          if (!data.name || !data.email || !data.message || !data.consent) {
+            setStatus("Completá los campos requeridos.", "error");
+            return;
+          }
+          // Honeypot
+          if (data.company) {
+            setStatus("Error de validación.", "error");
+            return;
+          }
+
+          // Si hay endpoint de Sheets, intentamos POST JSON
+          if (SHEETS_ENDPOINT) {
+            try {
+              const res = await fetch(SHEETS_ENDPOINT, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+                mode: "cors",
+              });
+              if (!res.ok) throw new Error("HTTP " + res.status);
+              setStatus("¡Consulta enviada! Te responderé a la brevedad.", "success");
+              leadForm.reset();
+              return;
+            } catch (err) {
+              console.error(err);
+              // Fallback a mailto si falla el fetch
+            }
+          }
+
+          // Fallback: mailto con mensaje prellenado
+          const body =
+            `Nombre: ${data.name}\nEmail: ${data.email}\nTeléfono: ${data.phone || "-"}\n` +
+            `Propiedad: ${title}\nPrecio: ${priceText || "-"}\nPágina: ${url}\n\n` +
+            `Mensaje:\n${data.message}`;
+          const href = buildMailto(EMAIL, `Consulta: ${title}`, body);
+          window.location.href = href;
+          setStatus("Abriendo tu app de correo…", "info");
+        });
+      }
     </script>
   </body>
 </html>]
