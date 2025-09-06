@@ -1,143 +1,241 @@
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Casa patagónica con vista al lago – Aldea del Este</title>
-  <meta name="description" content="Casa patagónica 4 dormitorios con vista al Nahuel Huapi, Aldea del Este, Bariloche. Lote 874 m², 190 m² cubiertos. Coordinación por WhatsApp." />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --brand:#572d30;
-      --brand-ink:#ffffff;
-      --accent:#363332;
-      --ink:#363332;
-      --muted:#666;
-      --bg:#f4f2f2;
-      --line:#e5e5e5;
-      --tint:#efeded;
-      --card:#ffffff;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;font-family:'Montserrat',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Helvetica Neue',Arial,'Noto Sans',sans-serif;color:var(--ink);background:var(--bg)}
+/**
+ * Home.tsx
+ * Landing minimalista y atractiva para una propiedad en Aldea del Este.
+ * Secciones: Hero (texto + grilla de imágenes), stats con íconos, highlights, descripción,
+ * bloque comercial con CTA a WhatsApp (con captura de lead rápida), mapa embebido y CTA flotante en mobile.
+ */
 
-    .container{max-width:1100px;margin:0 auto;padding:24px}
-    .header{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--line);z-index:10}
-    .brandbar{height:4px;background:linear-gradient(90deg,var(--brand),var(--accent))}
-    .row{display:grid;grid-template-columns:1fr;gap:24px}
-    @media(min-width:960px){ .row{grid-template-columns:1.15fr .85fr} }
+import React from 'react'
+import '../styles/theme.css'
+import BrandHeader from '../components/landing/BrandHeader'
+import SectionCard from '../components/landing/SectionCard'
+import TagChip from '../components/landing/TagChip'
+import CTAButton from '../components/landing/CTAButton'
+import ImageGrid from '../components/landing/ImageGrid'
+import CTAFloat from '../components/landing/CTAFloat'
+import EmailLeadForm from '../components/forms/EmailLeadForm'
+import { PROPERTY_ID, PROPERTY_TITLE, RECIPIENT_EMAIL, WHATSAPP_PHONE } from '../lib/config'
+import FeatureStat from '../components/landing/FeatureStat'
+import MapEmbed from '../components/landing/MapEmbed'
+import { buildWhatsAppUrl } from '../lib/links'
+import QuickWhatsAppLeadModal from '../components/lead/QuickWhatsAppLeadModal'
+import { Bed, Bath, CarFront, Ruler, Home as HomeIcon } from 'lucide-react'
 
-    .pill{display:inline-block;padding:12px 18px;border:1px solid var(--ink);border-radius:999px;text-decoration:none;color:var(--ink)}
-    .pill.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;background:var(--tint);padding:8px;border-radius:16px}
-    .card{border:1px solid var(--line);border-radius:16px;padding:16px;background:var(--card)}
-    .muted{color:var(--muted);font-size:14px}
-    .h1{font-size:28px;margin:0 0 8px}
-    .h2{font-size:20px;margin:24px 0 8px}
-    .img{width:100%;height:160px;object-fit:cover;border-radius:12px;display:block}
+/**
+ * Construye el enlace a WhatsApp con mensaje y UTM genéricos (fallback).
+ * El flujo normal intercepta el clic y abre un modal para capturar el lead primero.
+ */
+function useWhatsAppHref(): string {
+  return buildWhatsAppUrl({
+    phone: WHATSAPP_PHONE,
+    message:
+      'Hola, me interesa la casa de Aldea del Este. Quisiera coordinar una visita. (Enviado desde la landing)',
+    utm: {
+      utm_source: 'landing',
+      utm_medium: 'cta',
+      utm_campaign: 'aldea_del_este',
+    },
+  })
+}
 
-    @media(max-width:600px){
-      .btns .pill{width:100%;text-align:center}
-      .grid{grid-template-columns:repeat(2,1fr)}
-      .img{height:200px}
-      .h1{font-size:24px}
-      .container{padding:16px}
-    }
-  </style>
-</head>
-<body>
-  <header class="header" aria-label="Encabezado">
-    <div class="brandbar"></div>
-    <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-top:12px;padding-bottom:12px">
-      <strong>Natalia González · Martillera</strong>
-    </div>
-  </header>
+/**
+ * HomePage
+ * Render principal de la landing.
+ */
+export default function HomePage(): JSX.Element {
+  const [showEmailForm, setShowEmailForm] = React.useState(false)
+  const [showWaModal, setShowWaModal] = React.useState(false)
+  const whatsappHref = useWhatsAppHref()
 
-  <main class="container">
-    <!-- HERO -->
-    <section class="row" style="margin-top:24px">
-      <div>
-        <h1 class="h1">Casa estilo patagónico – 4 dormitorios – vista al lago (Aldea del Este)</h1>
-        <p><strong>Aldea del Este – La Morena 4276, Bariloche.</strong> Arquitectura patagónica con vistas al lago Nahuel Huapi desde ambientes principales. Lote <strong>874 m²</strong>, superficie cubierta <strong>190 m²</strong>. Cochera doble. Accesos ágiles y cercanía a servicios.</p>
+  /** Lista de imágenes usando los nombres originales. */
+  const images = [
+    { src: '/img/portada.jpg', alt: 'Fachada y jardín – Aldea del Este' },
+    { src: '/img/living.jpg', alt: 'Living con vista al lago – Aldea del Este' },
+    { src: '/img/dormitorio.jpg', alt: 'Dormitorio principal – Aldea del Este' },
+    { src: '/img/cocina.jpg', alt: 'Cocina' },
+    { src: '/img/galeria.jpg', alt: 'Galería / deck y jardín' },
+    { src: '/img/vista.jpg', alt: 'Vista al lago' },
+  ]
 
-        <div class="card" style="background:var(--tint);border-color:var(--line)">
-          <strong>¿Querés coordinar una visita?</strong>
-          <p class="muted" style="margin:6px 0 0">El botón de contacto está al final de esta página. Desde allí te respondo por WhatsApp con la ficha y opciones de visita.</p>
-        </div>
-      </div>
+  /** Año actual para el footer. */
+  const year = new Date().getFullYear()
 
-      <div aria-label="Galería de imágenes">
-        <div class="grid" role="img" aria-label="Galería de fotos de la casa">
-          <img src="/imagen/portada.jpg"    alt="Fachada principal de la casa en Aldea del Este" class="img" loading="eager" />
-          <img src="/imagen/living.jpg"     alt="Living con vista al lago" class="img" loading="lazy" />
-          <img src="/imagen/dormitorio.jpg" alt="Dormitorio principal" class="img" loading="lazy" />
-          <img src="/imagen/cocina.jpg"     alt="Cocina amplia" class="img" loading="lazy" />
-          <img src="/imagen/galeria.jpg"    alt="Galería, deck y jardín" class="img" loading="lazy" />
-          <img src="/imagen/vista.jpg"      alt="Vista al lago Nahuel Huapi" class="img" loading="lazy" />
-        </div>
-      </div>
-    </section>
+  /** Interceptar CTA de WhatsApp para capturar lead y luego abrir el chat. */
+  const onWhatsAppClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    setShowWaModal(true)
+  }
 
-    <!-- TAGS / HIGHLIGHTS -->
-    <section>
-      <h2 class="h2">Highlights</h2>
-      <div class="row">
-        <div class="card" aria-label="Características destacadas">
-          <span class="tag">Apto crédito hipotecario</span>
-          <span class="tag">4 dormitorios + escritorio</span>
-          <span class="tag">2 baños</span>
-          <span class="tag">Vista al lago</span>
-          <span class="tag">Lote 874 m²</span>
-          <span class="tag">Cubiertos 190 m²</span>
-          <span class="tag">Calefacción por radiadores</span>
-          <span class="tag">Cochera para 2 autos</span>
-          <span class="tag">Orientación Norte</span>
-          <span class="tag">Antigüedad: 23 años</span>
-        </div>
-      </div>
-    </section>
+  return (
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--ink)]">
+      <BrandHeader />
 
-    <!-- DESCRIPCIÓN -->
-    <section>
-      <h2 class="h2">Descripción breve</h2>
-      <p>Distribución: living-comedor con hogar y ventanales a vistas, cocina amplia, dormitorio principal (en planta a confirmar), tres dormitorios secundarios, escritorio/vestidor, dos baños completos y lavadero. Exterior: jardín, deck y cochera doble cubierta.</p>
-      <p>Terminaciones en piedra y madera; carpinterías de calidad y buena iluminación natural. Servicios: luz, gas y agua. Sistema de calefacción por radiadores en todos los ambientes.</p>
-    </section>
+      <main className="mx-auto max-w-[1100px] px-4 py-6 md:px-6">
+        {/* HERO */}
+        <section className="grid grid-cols-1 gap-6 md:grid-cols-2 md:items-start">
+          <div>
+            <h1 className="mb-2 text-[28px] font-semibold leading-tight md:text-[32px]">
+              Casa estilo patagónico – 4 dormitorios – vista al lago (Aldea del Este)
+            </h1>
+            <p className="text-[15px] leading-relaxed">
+              <strong>Aldea del Este – La Morena 4276, Bariloche.</strong> Arquitectura patagónica con vistas al lago
+              Nahuel Huapi desde ambientes principales. Lote <strong>874 m²</strong>, superficie cubierta{' '}
+              <strong>190 m²</strong>. Cochera doble. Accesos ágiles y cercanía a servicios.
+            </p>
 
-    <!-- INFO COMERCIAL + BOTÓN -->
-    <section>
-      <h2 class="h2">Información comercial</h2>
-      <div class="row">
-        <div class="card">
-          <p><strong>VALOR:</strong> USD 296.000</p>
-          <p><strong>Condiciones:</strong> apto crédito hipotecario (sujeto a calificación y tasación bancaria).</p>
-          <p><strong>Visitas:</strong> con coordinación previa.</p>
-          <div class="btns" style="margin-top:20px">
-            <a id="whatsapp-buyvisit" class="pill primary" href="#">Escribime por WhatsApp</a>
+            <SectionCard variant="tint" className="mt-4">
+              <strong>¿Querés coordinar una visita?</strong>
+              <p className="mt-1 text-xs text-[var(--muted)]">
+                El botón de contacto está <strong>al final de esta página</strong>. Desde allí te respondo por WhatsApp
+                con la ficha y opciones de visita.
+              </p>
+            </SectionCard>
           </div>
-          <p class="muted" style="margin-top:8px">Coordinamos únicamente por WhatsApp para agilizar.</p>
+
+          <div>
+            <ImageGrid items={images} />
+          </div>
+        </section>
+
+        {/* STATS CLAVE */}
+        <section className="mt-8">
+          <h2 className="mb-3 text-xl font-semibold">Datos clave</h2>
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
+            <FeatureStat icon={<Bed size={18} />} title="Dormitorios" value="4 + escritorio" />
+            <FeatureStat icon={<Bath size={18} />} title="Baños" value="2" />
+            <FeatureStat icon={<CarFront size={18} />} title="Cocheras" value="2" />
+            <FeatureStat icon={<Ruler size={18} />} title="Cubiertos" value="190 m²" />
+            <FeatureStat icon={<HomeIcon size={18} />} title="Lote" value="874 m²" />
+          </div>
+        </section>
+
+        {/* HIGHLIGHTS */}
+        <section className="mt-8">
+          <h2 className="mb-3 text-xl font-semibold">Highlights</h2>
+          <SectionCard>
+            <div>
+              <TagChip>Apto crédito hipotecario</TagChip>
+              <TagChip>4 dormitorios + escritorio</TagChip>
+              <TagChip>2 baños</TagChip>
+              <TagChip>Vista al lago</TagChip>
+              <TagChip>Lote 874 m²</TagChip>
+              <TagChip>Cubiertos 190 m²</TagChip>
+              <TagChip>Calefacción por radiadores</TagChip>
+              <TagChip>Cochera para 2 autos</TagChip>
+              <TagChip>Orientación Norte</TagChip>
+              <TagChip>Antigüedad: 23 años</TagChip>
+            </div>
+          </SectionCard>
+        </section>
+
+        {/* DESCRIPCIÓN */}
+        <section className="mt-8">
+          <h2 className="mb-3 text-xl font-semibold">Descripción breve</h2>
+          <div className="space-y-3">
+            <p className="text-[15px] leading-relaxed">
+              Distribución: living-comedor con hogar y ventanales a vistas, cocina amplia, dormitorio principal (en
+              planta a confirmar), tres dormitorios secundarios, escritorio/vestidor, dos baños completos y lavadero.
+              Exterior: jardín, deck y cochera doble cubierta.
+            </p>
+            <p className="text-[15px] leading-relaxed">
+              Terminaciones en piedra y madera; carpinterías de calidad y buena iluminación natural. Servicios: luz, gas
+              y agua. Sistema de calefacción por radiadores en todos los ambientes.
+            </p>
+          </div>
+        </section>
+
+        {/* INFORMACIÓN COMERCIAL + CTA */}
+        <section id="consultas" className="mt-8">
+          <h2 className="mb-3 text-xl font-semibold">Información comercial</h2>
+          <SectionCard>
+            <div className="space-y-2 text-[15px]">
+              <p>
+                <strong>VALOR:</strong> USD 296.000
+              </p>
+              <p>
+                <strong>Condiciones:</strong> apto crédito hipotecario (sujeto a calificación y tasación bancaria).
+              </p>
+              <p>
+                <strong>Visitas:</strong> con coordinación previa.
+              </p>
+            </div>
+
+            <div className="mt-4 space-y-3">
+              {/* Primero: Ver ubicación */}
+              <div>
+                <a
+                  href="#mapa"
+                  className="inline-flex items-center justify-center rounded-full border border-[var(--ink)] px-5 py-3 text-sm font-medium text-[var(--ink)] hover:bg-black/5"
+                >
+                  Ver ubicación
+                </a>
+              </div>
+
+              {/* Debajo: los dos contactos */}
+              <div className="flex flex-wrap gap-3">
+                <CTAButton id="whatsapp-buyvisit" href={whatsappHref} variant="primary" onClick={onWhatsAppClick}>
+                  Escribime por WhatsApp
+                </CTAButton>
+                <button
+                  type="button"
+                  onClick={() => setShowEmailForm((v) => !v)}
+                  className="inline-flex items-center justify-center rounded-full border border-[var(--ink)] px-5 py-3 text-sm font-medium text-[var(--ink)] hover:bg-black/5"
+                  aria-expanded={showEmailForm}
+                  aria-controls="email-form-panel"
+                >
+                  Prefiero contacto por email
+                </button>
+              </div>
+            </div>
+
+            <p className="mt-2 text-xs text-[var(--muted)]">
+              Coordinamos por WhatsApp para agilizar, pero si preferís email, podés usar el formulario alternativo.
+            </p>
+
+            {/* Panel plegable con el formulario por email */}
+            <div
+              id="email-form-panel"
+              className={`mt-4 overflow-hidden transition-all duration-300 ${
+                showEmailForm ? 'max-h-[1200px] opacity-100' : 'max-h-0 opacity-0'
+              }`}
+            >
+              <EmailLeadForm
+                propertyId={PROPERTY_ID}
+                propertyTitle={PROPERTY_TITLE}
+                recipientEmail={RECIPIENT_EMAIL}
+              />
+            </div>
+          </SectionCard>
+        </section>
+
+        {/* MAPA */}
+        <section id="mapa" className="mt-8">
+          <MapEmbed
+            title="Ubicación aproximada"
+            query="La Morena 4276, San Carlos de Bariloche, Río Negro, Argentina"
+            hint="La ubicación es aproximada. Solicitá la dirección exacta al coordinar la visita."
+          />
+        </section>
+      </main>
+
+      {/* FOOTER */}
+      <footer className="border-t border-[var(--line)]">
+        <div className="mx-auto max-w-[1100px] px-4 py-4 text-xs text-[var(--muted)] md:px-6">
+          © {year} Natalia González · Martillera Pública. Bariloche.
         </div>
-      </div>
-    </section>
-  </main>
+      </footer>
 
-  <footer>
-    <div class="container muted" style="padding:16px 24px">© <span id="year"></span> Natalia González · Martillera Pública. Bariloche.</div>
-  </footer>
+      {/* CTA flotante (visible sólo en mobile) */}
+      <CTAFloat id="whatsapp-buyvisit-floating" href={whatsappHref} label="Escribime por WhatsApp" onClick={onWhatsAppClick} />
 
-  <script>
-    // Enlace de WhatsApp dinámico
-    const msg = encodeURIComponent('Hola, me interesa la casa de Aldea del Este. Mi nombre es: ______. Quiero coordinar una visita.');
-    const href = 'https://wa.me/5492944635083?text=' + msg +
-      '&utm_source=landing&utm_medium=cta&utm_campaign=aldea_del_este';
-    const btn = document.getElementById('whatsapp-buyvisit');
-    if (btn) btn.href = href;
-
-    // Año dinámico
-    const y = document.getElementById('year');
-    if (y) y.textContent = new Date().getFullYear();
-  </script>
-</body>
-</html>
+      {/* Modal de lead rápido para WhatsApp */}
+      <QuickWhatsAppLeadModal
+        open={showWaModal}
+        onClose={() => setShowWaModal(false)}
+        phone={WHATSAPP_PHONE}
+        propertyId={PROPERTY_ID}
+        propertyTitle={PROPERTY_TITLE}
+      />
+    </div>
+  )
+}
