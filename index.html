@@ -2,29 +2,42 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Terreno 4.287 m² con cabaña – Casa de Piedra</title>
-  <meta name="description" content="Terreno 4.287 m² con cabaña en B° Casa de Piedra (Bariloche). Ingreso privado, frente a plaza, vistas al Nahuel Huapi. Pida ficha y coordine visita por WhatsApp." />
+  <title>Casa estilo patagónico – 4 dormitorios – Vista al lago | Aldea del Este</title>
+  <meta name="description" content="Casa estilo patagónico en venta en Aldea del Este (Bariloche). 4 dormitorios + escritorio, 2 baños, 2 cocheras. Lote 874 m², 190 m² cubiertos. Vista al Nahuel Huapi. Pedí ficha y coordiná visita por WhatsApp." />
   <style>
-    *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Helvetica Neue',Arial,'Noto Sans',sans-serif;color:#111;background:#fff}
-    .container{max-width:1000px;margin:0 auto;padding:24px}
-    .header{position:sticky;top:0;background:#fffcc;backdrop-filter:saturate(180%) blur(6px);border-bottom:1px solid #e5e5e5}
+    /* —— THEME ——
+       Paleta Naty — ngespacios
+       --brand: principal (#572d30)
+       --accent: apoyo (#363332)
+       --bg: fondo (#f4f2f2)
+    */
+    :root{--brand:#572d30;--brand-ink:#ffffff;--accent:#363332;--ink:#363332;--muted:#666;--bg:#f4f2f2;--line:#e5e5e5;--tint:#efeded}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;color:var(--ink);background:var(--bg)}
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    .header{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--line)}
+    .brandbar{height:4px;background:linear-gradient(90deg,var(--brand),var(--accent))}
     .row{display:grid;grid-template-columns:1fr;gap:24px}
-    @media(min-width:900px){.row{grid-template-columns:1.1fr .9fr}}
-    .pill{display:inline-block;padding:10px 16px;border:1px solid #111;border-radius:999px;text-decoration:none;color:#111}
-    .pill.secondary{border-color:#c9c9c9}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;background:#f3f3f3;padding:8px;border-radius:16px}
-    .ph{height:120px;background:#e5e5e5;border-radius:12px} .img{width:100%;height:120px;object-fit:cover;border-radius:12px} 
-    .card{border:1px solid #e5e5e5;border-radius:16px;padding:16px}
-    .muted{color:#666;font-size:12px}
+    @media(min-width:960px){.row{grid-template-columns:1.15fr .85fr}}
+    .pill{display:inline-block;padding:10px 16px;border:1px solid var(--ink);border-radius:999px;text-decoration:none;color:var(--ink)}
+    .pill.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+    .pill.secondary{border-color:var(--brand);color:var(--brand)}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;background:var(--tint);padding:8px;border-radius:16px}
+    .ph{height:120px;background:#e5e5e5;border-radius:12px}
+    .card{border:1px solid var(--line);border-radius:16px;padding:16px}
+    .muted{color:var(--muted);font-size:12px}
     .h1{font-size:28px;margin:0 0 8px 0}
     .h2{font-size:20px;margin:24px 0 8px}
     .btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
-    footer{border-top:1px solid #e5e5e5}
+    footer{border-top:1px solid var(--line)}
+    .tag{display:inline-block;font-size:12px;border:1px solid var(--brand);color:var(--brand);border-radius:999px;padding:6px 10px;margin-right:6px;margin-bottom:6px}
   </style>
 </head>
 <body>
-  <header class="header">
+  <header class="header"><div class="brandbar"></div>
     <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-top:12px;padding-bottom:12px">
       <strong>Natalia González · Martillera (Mat. 377-RP-21 Fº456 TºII)</strong>
       <a id="whatsapp-top" class="pill secondary" href="#">WhatsApp</a>
@@ -32,48 +45,69 @@
   </header>
 
   <main class="container">
+    <!-- HERO -->
     <section class="row" style="margin-top:24px">
       <div>
-        <h1 class="h1">Terreno 4.287 m² con cabaña en B° Casa de Piedra</h1>
-        <p>Ingreso privado, frente a plaza, vistas al Nahuel Huapi. Ubicación: <strong>Primera Diagonal al 11.000 – Bariloche</strong>. A metros de la parada de transporte público. Acceso ágil por Camino Antiguo hacia Cerro Catedral.</p>
+        <h1 class="h1">Casa estilo patagónico – 4 dormitorios – vista al lago (Aldea del Este)</h1>
+        <p><strong>Aldea del Este – La Morena 4276, Bariloche.</strong> Arquitectura patagónica con vistas al lago Nahuel Huapi desde ambientes principales. Lote <strong>874 m²</strong>, superficie cubierta <strong>190 m²</strong>. Cochera doble. Accesos ágiles y cercanía a servicios.</p>
         <div class="btns">
-          <a id="whatsapp-cta1" class="pill" href="#">Quiero la ficha + ubicación</a>
+          <a id="whatsapp-cta1" class="pill primary" href="#">Quiero ficha</a>
           <a id="whatsapp-cta2" class="pill secondary" href="#">Coordinar visita</a>
         </div>
-        <p class="muted" style="margin-top:8px">Al contactarte por WhatsApp recibís la ficha resumida y opciones de visita.</p>
+        <p class="muted" style="margin-top:8px">Al contactarte por WhatsApp recibís ficha completa y opciones de visita.</p>
       </div>
       <div>
         <div class="grid">
-          <!-- Reemplazá estos src por tus archivos reales en /img (subidos al repo) -->
-          <img src="/img/portada.jpg" alt="Fachada y jardín – Aldea del Este" class="img" loading="eager" />
-          <img src="/img/living.jpg" alt="Living con vista al lago – Aldea del Este" class="img" loading="lazy" />
-          <img src="/img/dormitorio.jpg" alt="Dormitorio principal – Aldea del Este" class="img" loading="lazy" />
+          <!-- Subí estos archivos al repo en /img con estos nombres exactos -->
+          <img src="/img/portada.jpg" alt="Fachada y jardín – Aldea del Este" class="ph" style="object-fit:cover" loading="eager" />
+          <img src="/img/living.jpg" alt="Living con vista al lago – Aldea del Este" class="ph" style="object-fit:cover" loading="lazy" />
+          <img src="/img/dormitorio.jpg" alt="Dormitorio principal – Aldea del Este" class="ph" style="object-fit:cover" loading="lazy" />
         </div>
       </div>
     </section>
 
+    <!-- TAGS / HIGHLIGHTS -->
     <section>
-      <h2 class="h2">Características</h2>
+      <h2 class="h2">Highlights</h2>
       <div class="row">
-        <div class="card">Superficie 4.287 m² · Orientación Norte</div>
-        <div class="card">Cabaña aprox. 70 m²</div>
-        <div class="card">Ingreso privado y frente a plaza</div>
-        <div class="card">Servicios: luz · gas · agua</div>
-        <div class="card">Vistas al Nahuel Huapi desde cotas superiores</div>
-        <div class="card">FOT 35% (según normativa vigente)</div>
-        <div class="card">Contrato de alquiler vigente con cláusula de venta</div>
+        <div class="card">
+          <span class="tag">4 dormitorios + escritorio</span>
+          <span class="tag">2 baños</span>
+          <span class="tag">Vista al lago</span>
+          <span class="tag">Lote 874 m²</span>
+          <span class="tag">Cubiertos 190 m²</span>
+          <span class="tag">Calefacción por radiadores</span>
+          <span class="tag">Cochera para 2 autos</span>
+          <span class="tag">Orientación Norte</span>
+          <span class="tag">Antigüedad: 23 años</span>
+        </div>
       </div>
     </section>
 
+    <!-- DETALLE -->
     <section>
       <h2 class="h2">Descripción breve</h2>
-      <p>Topografía: combinación de áreas niveladas y sectores con pendientes; admite proyecto escalonado y aprovechamiento de visuales. Cota aprox.: 800 m s.n.m. Visitas con coordinación previa.</p>
+      <p>Distribución: living-comedor con hogar y ventanales a vistas, cocina amplia, dormitorio principal (en planta a confirmar), tres dormitorios secundarios, escritorio/vestidor, dos baños completos y lavadero. Exterior: jardín, deck y cochera doble cubierta.</p>
+      <p>Terminaciones en piedra y madera; carpinterías de calidad y buena iluminación natural. Servicios: luz, gas y agua. Sistema de calefacción por radiadores en todos los ambientes.</p>
       <div class="btns">
-        <a id="whatsapp-cta3" class="pill" href="#">Pedir ficha + ubicación</a>
+        <a id="whatsapp-cta3" class="pill primary" href="#">Pedir ficha</a>
         <a id="whatsapp-cta4" class="pill secondary" href="#">Hablar ahora por WhatsApp</a>
       </div>
-      <p class="muted" style="margin-top:16px">Nota al interesado: parámetros urbanísticos (FOT/FOS, alturas, retiros, usos), superficies y condiciones de servicios deberán ser verificados con profesionales matriculados y organismos competentes.</p>
+      <p class="muted" style="margin-top:16px">Nota al interesado: medidas, superficies y parámetros urbanísticos deberán verificarse con profesionales matriculados y organismos competentes antes de ofertar.</p>
     </section>
+
+    <!-- INFO COMERCIAL -->
+    <section>
+      <h2 class="h2">Información comercial</h2>
+      <div class="row">
+        <div class="card">
+          <p><strong>VALOR:</strong> USD 296.000</p>
+          <p><strong>Condiciones:</strong> apto préstamo hipotecario.</p>
+          <p><strong>Visitas:</strong> con coordinación previa.</p>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer>
@@ -81,8 +115,8 @@
   </footer>
 
   <script>
-    // Reemplazá ACA con tu número real, formato 549294XXXXXXX
-    var whatsappLink = 'https://wa.me/5492944635083?text=Quiero%20informaci%C3%B3n%20del%20terreno%20en%20Casa%20de%20Piedra&utm_source=landing&utm_medium=cta&utm_campaign=cdp_v1';
+    // WhatsApp con número real
+    var whatsappLink = 'https://wa.me/5492944635083?text=Quiero%20info%20de%20la%20casa%20estilo%20patag%C3%B3nico%20(4D)%20con%20vista%20al%20lago&utm_source=landing&utm_medium=cta&utm_campaign=patagonica_4d';
     ['whatsapp-top','whatsapp-cta1','whatsapp-cta2','whatsapp-cta3','whatsapp-cta4'].forEach(function(id){
       var a=document.getElementById(id); if(a) a.href=whatsappLink;
     });
