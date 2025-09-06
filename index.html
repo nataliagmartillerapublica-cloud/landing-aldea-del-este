@@ -6,12 +6,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Casa estilo patagónico – 4 dormitorios – Vista al lago | Aldea del Este</title>
-  <meta name="description" content="Casa estilo patagónico en venta en Aldea del Este (Bariloche). 4 dormitorios + escritorio, 2 baños, 2 cocheras. Lote 874 m², 190 m² cubiertos. Vista al Nahuel Huapi. Coordinación por WhatsApp." />
+  <meta name="description" content="Casa estilo patagónico en venta en Aldea del Este (Bariloche). 4 dormitorios + escritorio, 2 baños, 2 cocheras. Lote 874 m², 190 m² cubiertos. Vista al Nahuel Huapi. Pedí ficha y coordiná visita por WhatsApp." />
   <style>
-    /* —— THEME ——  Paleta Naty — ngespacios */
+    /* —— THEME ——
+       Paleta Naty — ngespacios
+       --brand: principal (#572d30)
+       --accent: apoyo (#363332)
+       --bg: fondo (#f4f2f2)
+    */
     :root{--brand:#572d30;--brand-ink:#ffffff;--accent:#363332;--ink:#363332;--muted:#666;--bg:#f4f2f2;--line:#e5e5e5;--tint:#efeded}
     *{box-sizing:border-box}
-    body{margin:0;font-family:'Montserrat',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Helvetica Neue',Arial,'Noto Sans',sans-serif;color:var(--ink);background:var(--bg)}
+    body{margin:0;font-family:'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;color:var(--ink);background:var(--bg)}
     .container{max-width:1100px;margin:0 auto;padding:24px}
     .header{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--line)}
     .brandbar{height:4px;background:linear-gradient(90deg,var(--brand),var(--accent))}
@@ -21,6 +26,7 @@
     .pill.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
     .pill.secondary{border-color:var(--brand);color:var(--brand)}
     .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;background:var(--tint);padding:8px;border-radius:16px}
+    .ph{height:120px;background:#e5e5e5;border-radius:12px}
     .card{border:1px solid var(--line);border-radius:16px;padding:16px}
     .muted{color:var(--muted);font-size:12px}
     .h1{font-size:28px;margin:0 0 8px 0}
@@ -28,8 +34,9 @@
     .btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
     footer{border-top:1px solid var(--line)}
     .tag{display:inline-block;font-size:12px;border:1px solid var(--brand);color:var(--brand);border-radius:999px;padding:6px 10px;margin-right:6px;margin-bottom:6px}
-    /* Imágenes */
+    /* Base images */
     .img{width:100%;height:160px;object-fit:cover;border-radius:12px}
+    .rotate90{transform:rotate(90deg);transform-origin:center;} 
     @media(max-width:600px){
       .btns .pill{width:100%;text-align:center}
       .grid{grid-template-columns:repeat(2,1fr)}
@@ -43,8 +50,7 @@
   <header class="header"><div class="brandbar"></div>
     <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-top:12px;padding-bottom:12px">
       <strong>Natalia González · Martillera (Mat. 377-RP-21 Fº456 TºII)</strong>
-      <!-- Sin botón en el header -->
-      <span></span>
+      <!-- botón header eliminado a pedido: solo contacto al final -->
     </div>
   </header>
 
@@ -54,34 +60,28 @@
       <div>
         <h1 class="h1">Casa estilo patagónico – 4 dormitorios – vista al lago (Aldea del Este)</h1>
         <p><strong>Aldea del Este – La Morena 4276, Bariloche.</strong> Arquitectura patagónica con vistas al lago Nahuel Huapi desde ambientes principales. Lote <strong>874 m²</strong>, superficie cubierta <strong>190 m²</strong>. Cochera doble. Accesos ágiles y cercanía a servicios.</p>
-
-        <!-- Recuadro informativo en lugar de botones -->
         <div class="card" style="background:var(--tint);border-color:var(--line)">
           <strong>¿Querés coordinar una visita?</strong>
-          <p class="muted" style="margin:6px 0 0">
-            El botón de contacto está <strong>al final de esta página</strong>. Desde allí te respondo por WhatsApp con la ficha y opciones de visita.
-          </p>
+          <p class="muted" style="margin:6px 0 0">El botón de contacto está <strong>al final de esta página</strong>. Desde allí te respondo por WhatsApp con la ficha y opciones de visita.</p>
         </div>
       </div>
-
       <div>
         <div class="grid">
           <!-- Subí estos archivos al repo en /img con estos nombres exactos -->
-          <img src="/img/portada.jpg"    alt="Fachada y jardín – Aldea del Este" class="img" loading="eager" />
-          <img src="/img/living.jpg"     alt="Living con vista al lago – Aldea del Este" class="img" loading="lazy" />
-          <img src="/img/dormitorio.jpg" alt="Dormitorio principal – Aldea del Este" class="img" loading="lazy" />
-          <img src="/img/cocina.jpg"     alt="Cocina" class="img" loading="lazy" />
-          <img src="/img/galeria.jpg"    alt="Galería / deck y jardín" class="img" loading="lazy" />
-          <img src="/img/vista.jpg"      alt="Vista al lago" class="img" loading="lazy" />
+          <img src=\"/img/portada.jpg\" alt="Fachada y jardín – Aldea del Este" class="img rotate90" loading="eager" />
+          <img src=\"/img/living.jpg\" alt="Living con vista al lago – Aldea del Este" class="img rotate90" loading="lazy" />
+          <img src=\"/img/dormitorio.jpg\" alt="Dormitorio principal – Aldea del Este" class="img rotate90" loading="lazy" />
+          <img src=\"/img/cocina.jpg\" alt="Cocina" class="img rotate90" loading="lazy" />
+          <img src=\"/img/galeria.jpg\" alt="Galería / deck y jardín" class="img rotate90" loading="lazy" />
+          <img src=\"/img/vista.jpg\" alt="Vista al lago" class="img rotate90" loading="lazy" />
         </div>
       </div>
     </section>
 
     <!-- TAGS / HIGHLIGHTS -->
     <section>
-      <h2 class="h2">Highlights</h2>
-      <div class="row">
-        <div class="card">
+      $1
+          <span class=\"tag\">Apto crédito hipotecario<\/span>
           <span class="tag">4 dormitorios + escritorio</span>
           <span class="tag">2 baños</span>
           <span class="tag">Vista al lago</span>
@@ -100,24 +100,26 @@
       <h2 class="h2">Descripción breve</h2>
       <p>Distribución: living-comedor con hogar y ventanales a vistas, cocina amplia, dormitorio principal (en planta a confirmar), tres dormitorios secundarios, escritorio/vestidor, dos baños completos y lavadero. Exterior: jardín, deck y cochera doble cubierta.</p>
       <p>Terminaciones en piedra y madera; carpinterías de calidad y buena iluminación natural. Servicios: luz, gas y agua. Sistema de calefacción por radiadores en todos los ambientes.</p>
+      
     </section>
 
-    <!-- INFO COMERCIAL + BOTÓN (solo aquí) -->
+    <!-- INFO COMERCIAL -->
     <section>
       <h2 class="h2">Información comercial</h2>
       <div class="row">
         <div class="card">
           <p><strong>VALOR:</strong> USD 296.000</p>
           <p><strong>Condiciones:</strong> apto préstamo hipotecario.</p>
-          <p><strong>Visitas:</strong> con coordinación previa.</p>
+          $1
 
-          <div class="btns" style="margin-top:20px">
-            <a id="whatsapp-buyvisit" class="pill primary" href="#">Quiero comprar y coordinar una visita</a>
-          </div>
-          <p class="muted" style="margin-top:8px">Coordinamos únicamente por WhatsApp para agilizar.</p>
+          <div class=\"btns\" style=\"margin-top:20px\">
+            <a id=\"whatsapp-buyvisit\" class=\"pill primary\" href=\"#\">Escribime por WhatsApp<\/a>
+          <\/div>
+          <p class=\"muted\" style=\"margin-top:8px\">Coordinamos únicamente por WhatsApp para agilizar.<\/p>
         </div>
       </div>
     </section>
+
   </main>
 
   <footer>
@@ -125,29 +127,14 @@
   </footer>
 
   <script>
-    // Tu número (formato internacional)
-    const base = 'https://wa.me/5492944635083?text=';
+    // WhatsApp (mensaje simple para leads calificados)
+    var msg = encodeURIComponent('Hola, me interesa la casa de Aldea del Este. Mi nombre es: ______. Quiero coordinar una visita.');
+    var link = 'https://wa.me/5492944635083?text=' + msg + '&utm_source=landing&utm_medium=cta&utm_campaign=aldea_del_este';
+    var btn = document.getElementById('whatsapp-buyvisit');
+    if (btn) btn.href = link;
 
-    // Mensaje único (compra + visita), sin hablar de presupuesto.
-    // Incluye el enlace de esta landing para que el cliente lo guarde en el chat.
-    const msgBUYVISIT = encodeURIComponent(
-      '[COMPRA+VISITA] Aldea del Este — Quiero comprar y coordinar una visita.\n' +
-      'Disponibilidad: ______ (día/franja).\n' +
-      'Modalidad: contado / préstamo hipotecario (elegir).\n' +
-      'Nombre y apellido: ______.\n\n' +
-      'Enlace de la propiedad: ' + window.location.href
-    );
-
-    function setHref(id, msg){
-      const a = document.getElementById(id);
-      if (a) a.href = base + msg + '&utm_source=landing&utm_medium=cta&utm_campaign=aldea_del_este';
-    }
-
-    // ÚNICO botón abajo
-    setHref('whatsapp-buyvisit', msgBUYVISIT);
-
-    // Año del footer
-    const y = document.getElementById('year');
+    // Año footer
+    var y = document.getElementById('year');
     if (y) y.textContent = new Date().getFullYear();
   </script>
 </body>
