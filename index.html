@@ -8,15 +8,10 @@
   <title>Casa estilo patagónico – 4 dormitorios – Vista al lago | Aldea del Este</title>
   <meta name="description" content="Casa estilo patagónico en venta en Aldea del Este (Bariloche). 4 dormitorios + escritorio, 2 baños, 2 cocheras. Lote 874 m², 190 m² cubiertos. Vista al Nahuel Huapi. Pedí ficha y coordiná visita por WhatsApp." />
   <style>
-    /* —— THEME ——
-       Paleta Naty — ngespacios
-       --brand: principal (#572d30)
-       --accent: apoyo (#363332)
-       --bg: fondo (#f4f2f2)
-    */
+    /* —— THEME ——  Paleta Naty — ngespacios */
     :root{--brand:#572d30;--brand-ink:#ffffff;--accent:#363332;--ink:#363332;--muted:#666;--bg:#f4f2f2;--line:#e5e5e5;--tint:#efeded}
     *{box-sizing:border-box}
-    body{margin:0;font-family:'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;color:var(--ink);background:var(--bg)}
+    body{margin:0;font-family:'Montserrat',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Helvetica Neue',Arial,'Noto Sans',sans-serif;color:var(--ink);background:var(--bg)}
     .container{max-width:1100px;margin:0 auto;padding:24px}
     .header{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--line)}
     .brandbar{height:4px;background:linear-gradient(90deg,var(--brand),var(--accent))}
@@ -26,7 +21,6 @@
     .pill.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
     .pill.secondary{border-color:var(--brand);color:var(--brand)}
     .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;background:var(--tint);padding:8px;border-radius:16px}
-    .ph{height:120px;background:#e5e5e5;border-radius:12px}
     .card{border:1px solid var(--line);border-radius:16px;padding:16px}
     .muted{color:var(--muted);font-size:12px}
     .h1{font-size:28px;margin:0 0 8px 0}
@@ -34,9 +28,8 @@
     .btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
     footer{border-top:1px solid var(--line)}
     .tag{display:inline-block;font-size:12px;border:1px solid var(--brand);color:var(--brand);border-radius:999px;padding:6px 10px;margin-right:6px;margin-bottom:6px}
-    /* Base images */
+    /* Imágenes */
     .img{width:100%;height:160px;object-fit:cover;border-radius:12px}
-    .rotate90{transform:rotate(90deg);transform-origin:center;} 
     @media(max-width:600px){
       .btns .pill{width:100%;text-align:center}
       .grid{grid-template-columns:repeat(2,1fr)}
@@ -69,12 +62,12 @@
       <div>
         <div class="grid">
           <!-- Subí estos archivos al repo en /img con estos nombres exactos -->
-          <img src=\"/img/portada.jpg\" alt="Fachada y jardín – Aldea del Este" class="img rotate90" loading="eager" />
-          <img src=\"/img/living.jpg\" alt="Living con vista al lago – Aldea del Este" class="img rotate90" loading="lazy" />
-          <img src=\"/img/dormitorio.jpg\" alt="Dormitorio principal – Aldea del Este" class="img rotate90" loading="lazy" />
-          <img src=\"/img/cocina.jpg\" alt="Cocina" class="img rotate90" loading="lazy" />
-          <img src=\"/img/galeria.jpg\" alt="Galería / deck y jardín" class="img rotate90" loading="lazy" />
-          <img src=\"/img/vista.jpg\" alt="Vista al lago" class="img rotate90" loading="lazy" />
+          <img src="/img/portada.jpg"    alt="Fachada y jardín – Aldea del Este" class="img" loading="eager" />
+          <img src="/img/living.jpg"     alt="Living con vista al lago – Aldea del Este" class="img" loading="lazy" />
+          <img src="/img/dormitorio.jpg" alt="Dormitorio principal – Aldea del Este" class="img" loading="lazy" />
+          <img src="/img/cocina.jpg"     alt="Cocina" class="img" loading="lazy" />
+          <img src="/img/galeria.jpg"    alt="Galería / deck y jardín" class="img" loading="lazy" />
+          <img src="/img/vista.jpg"      alt="Vista al lago" class="img" loading="lazy" />
         </div>
       </div>
     </section>
@@ -120,7 +113,6 @@
         </div>
       </div>
     </section>
-
   </main>
 
   <footer>
@@ -129,7 +121,7 @@
 
   <script>
     // WhatsApp con número real
-    var whatsappLink = 'https://wa.me/5492944635083?text=Quiero%20info%20de%20la%20casa%20estilo%20patag%C3%B3nico%20(4D)%20con%20vista%20al%20lago&utm_source=landing&utm_medium=cta&utm_campaign=patagonica_4d';
+    var whatsappLink='https://wa.me/5492944635083?text=Quiero%20info%20de%20la%20casa%20estilo%20patag%C3%B3nico%20(4D)%20con%20vista%20al%20lago&utm_source=landing&utm_medium=cta&utm_campaign=patagonica_4d';
     ['whatsapp-top','whatsapp-cta1','whatsapp-cta2','whatsapp-cta3','whatsapp-cta4'].forEach(function(id){
       var a=document.getElementById(id); if(a) a.href=whatsappLink;
     });
