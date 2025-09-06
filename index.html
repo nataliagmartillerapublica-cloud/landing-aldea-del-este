@@ -1,4 +1,4 @@
-<!doctype html>
+<![doctype html>
 <html lang="es">
   <head>
     <meta charset="utf-8" />
@@ -9,14 +9,14 @@
     <meta name="color-scheme" content="light only" />
     <style>
       :root {
-        /* Ajustá sólo estos colores para tu marca */
-        --bg: #f8fafc;         /* slate-50 */
-        --ink: #0f172a;        /* slate-900 */
-        --accent: #111827;     /* gray-900 */
-        --brand: #0ea5e9;      /* BRAND COLOR → pasame el HEX y lo pongo aquí */
-        --brand-ink: #ffffff;  /* Blanco sobre el brand */
-        --line: #e5e7eb;       /* gray-200 */
-        --muted: #6b7280;      /* gray-500 */
+        /* Paleta de la marca */
+        --bg: #f4f2f2;
+        --ink: #363332;
+        --accent: #363332;
+        --brand: #572d30;
+        --brand-ink: #ffffff;
+        --line: #e5e7eb;
+        --muted: #666666;
       }
       .container-w { max-width: 1100px; }
       /* Transiciones para panel plegable y modal */
@@ -76,14 +76,14 @@
         <!-- Grilla de imágenes: todas con el mismo tamaño -->
         <div>
           <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
-            <img src="img/portada.jpg" alt="Fachada y jardín – Aldea del Este" class="w-full aspect-[16/10] rounded-lg object-cover">
-            <img src="img/living.jpg" alt="Living con vista al lago" class="w-full aspect-[16/10] rounded-lg object-cover">
-            <img src="img/dormitorio.jpg" alt="Dormitorio principal" class="w-full aspect-[16/10] rounded-lg object-cover">
-            <img src="img/cocina.jpg" alt="Cocina" class="w-full aspect-[16/10] rounded-lg object-cover">
-            <img src="img/galeria.jpg" alt="Galería y jardín" class="w-full aspect-[16/10] rounded-lg object-cover">
-            <img src="img/vista.jpg" alt="Vista al lago" class="w-full aspect-[16/10] rounded-lg object-cover">
+            <img src="img/portada.jpg" alt="Fachada y jardín – Aldea del Este" class="w-full aspect-[4/3] rounded-lg object-cover">
+            <img src="img/living.jpg" alt="Living con vista al lago" class="w-full aspect-[4/3] rounded-lg object-cover">
+            <img src="img/dormitorio.jpg" alt="Dormitorio principal" class="w-full aspect-[4/3] rounded-lg object-cover">
+            <img src="img/cocina.jpg" alt="Cocina" class="w-full aspect-[4/3] rounded-lg object-cover">
+            <img src="img/galeria.jpg" alt="Galería y jardín" class="w-full aspect-[4/3] rounded-lg object-cover">
+            <img src="img/vista.jpg" alt="Vista al lago" class="w-full aspect-[4/3] rounded-lg object-cover">
           </div>
-          <p class="mt-2 text-xs text-[var(--muted)]">Las imágenes se recortan automáticamente para mantener tamaño uniforme.</p>
+          <p class="mt-2 text-xs text-[var(--muted)]">Las imágenes mantienen tamaño uniforme (4:3).</p>
         </div>
       </section>
 
@@ -119,16 +119,16 @@
         <h2 class="mb-3 text-xl font-semibold">Highlights</h2>
         <div class="rounded-2xl border border-[var(--line)] bg-white p-4">
           <div class="flex flex-wrap gap-2">
-            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-slate-50 px-3 py-1 text-xs">Apto crédito hipotecario</span>
-            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-slate-50 px-3 py-1 text-xs">4 dormitorios + escritorio</span>
-            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-slate-50 px-3 py-1 text-xs">2 baños</span>
-            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-slate-50 px-3 py-1 text-xs">Vista al lago</span>
-            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-slate-50 px-3 py-1 text-xs">Lote 874 m²</span>
-            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-slate-50 px-3 py-1 text-xs">Cubiertos 190 m²</span>
-            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-slate-50 px-3 py-1 text-xs">Radiadores</span>
-            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-slate-50 px-3 py-1 text-xs">Cochera doble</span>
-            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-slate-50 px-3 py-1 text-xs">Orientación Norte</span>
-            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-slate-50 px-3 py-1 text-xs">Antigüedad: 23 años</span>
+            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs">Apto crédito hipotecario</span>
+            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs">4 dormitorios + escritorio</span>
+            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs">2 baños</span>
+            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs">Vista al lago</span>
+            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs">Lote 874 m²</span>
+            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs">Cubiertos 190 m²</span>
+            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs">Radiadores</span>
+            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs">Cochera doble</span>
+            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs">Orientación Norte</span>
+            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs">Antigüedad: 23 años</span>
           </div>
         </div>
       </section>
@@ -298,8 +298,8 @@
 
     <!-- Script: configuración básica y manejadores -->
     <script>
-      // CONFIG: Reemplazá estos valores por los reales
-      const PHONE = '5492944635083'; // <- Reemplazar con tu número (E.164, sin +, sin espacios)
+      // CONFIG
+      const PHONE = '5492944635083';
       const PROPERTY_TITLE = 'Casa estilo patagónico – Aldea del Este';
       const ADDRESS = 'La Morena 4276, San Carlos de Bariloche, Río Negro, Argentina';
 
@@ -380,4 +380,4 @@
       });
     </script>
   </body>
-</html>
+</html>]
