@@ -1,241 +1,388 @@
-/**
- * Home.tsx
- * Landing minimalista y atractiva para una propiedad en Aldea del Este.
- * Secciones: Hero (texto + grilla de imágenes), stats con íconos, highlights, descripción,
- * bloque comercial con CTA a WhatsApp (con captura de lead rápida), mapa embebido y CTA flotante en mobile.
- */
+<!--
+  index.html (standalone)
+  Landing de propiedad en Aldea del Este sin dependencias de React.
+  - Estilos: Tailwind CDN.
+  - Funcional: Modal rápido de WhatsApp (captura nombre y abre chat).
+  - Por ahora NO guarda leads (Sheets lo agregamos luego).
+  - Sube una carpeta /img con: portada.jpg, living.jpg, dormitorio.jpg, cocina.jpg, galeria.jpg, vista.jpg
+  Accesibilidad: foco visible, alto contraste, etiquetas semánticas básicas.
+-->
 
-import React from 'react'
-import '../styles/theme.css'
-import BrandHeader from '../components/landing/BrandHeader'
-import SectionCard from '../components/landing/SectionCard'
-import TagChip from '../components/landing/TagChip'
-import CTAButton from '../components/landing/CTAButton'
-import ImageGrid from '../components/landing/ImageGrid'
-import CTAFloat from '../components/landing/CTAFloat'
-import EmailLeadForm from '../components/forms/EmailLeadForm'
-import { PROPERTY_ID, PROPERTY_TITLE, RECIPIENT_EMAIL, WHATSAPP_PHONE } from '../lib/config'
-import FeatureStat from '../components/landing/FeatureStat'
-import MapEmbed from '../components/landing/MapEmbed'
-import { buildWhatsAppUrl } from '../lib/links'
-import QuickWhatsAppLeadModal from '../components/lead/QuickWhatsAppLeadModal'
-import { Bed, Bath, CarFront, Ruler, Home as HomeIcon } from 'lucide-react'
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Casa estilo patagónico – Aldea del Este</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="color-scheme" content="light only" />
+    <style>
+      :root {
+        --bg: #f8fafc;         /* slate-50 */
+        --ink: #0f172a;        /* slate-900 */
+        --accent: #111827;     /* gray-900 */
+        --brand: #0ea5e9;      /* sky-500 */
+        --brand-ink: #ffffff;  /* white */
+        --line: #e5e7eb;       /* gray-200 */
+        --muted: #6b7280;      /* gray-500 */
+      }
+      .container-w {
+        max-width: 1100px;
+      }
+      /* Transiciones para panel plegable y modal */
+      .fade-enter { opacity: 0 }
+      .fade-enter-active { opacity: 1; transition: opacity .2s ease }
+      .collapse { overflow: hidden; transition: max-height .3s ease, opacity .3s ease }
+    </style>
+    <meta name="description" content="Casa estilo patagónico con vista al lago en Aldea del Este. 4 dormitorios, 190 m² cubiertos, lote 874 m²." />
+  </head>
 
-/**
- * Construye el enlace a WhatsApp con mensaje y UTM genéricos (fallback).
- * El flujo normal intercepta el clic y abre un modal para capturar el lead primero.
- */
-function useWhatsAppHref(): string {
-  return buildWhatsAppUrl({
-    phone: WHATSAPP_PHONE,
-    message:
-      'Hola, me interesa la casa de Aldea del Este. Quisiera coordinar una visita. (Enviado desde la landing)',
-    utm: {
-      utm_source: 'landing',
-      utm_medium: 'cta',
-      utm_campaign: 'aldea_del_este',
-    },
-  })
-}
-
-/**
- * HomePage
- * Render principal de la landing.
- */
-export default function HomePage(): JSX.Element {
-  const [showEmailForm, setShowEmailForm] = React.useState(false)
-  const [showWaModal, setShowWaModal] = React.useState(false)
-  const whatsappHref = useWhatsAppHref()
-
-  /** Lista de imágenes usando los nombres originales. */
-  const images = [
-    { src: '/img/portada.jpg', alt: 'portada.jpg' },
-    { src: '/img/living.jpg', alt: 'living.jpg' },
-    { src: '/img/dormitorio.jpg', alt: 'dormitorio.jpg' },
-    { src: '/img/cocina.jpg', alt: 'cocina.jpg' },
-    { src: '/img/galeria.jpg', alt: 'galeria.jpg' },
-    { src: '/img/vista.jpg', alt: 'vista.jpg' },
-  ]
-
-  /** Año actual para el footer. */
-  const year = new Date().getFullYear()
-
-  /** Interceptar CTA de WhatsApp para capturar lead y luego abrir el chat. */
-  const onWhatsAppClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault()
-    setShowWaModal(true)
-  }
-
-  return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--ink)]">
-      <BrandHeader />
-
-      <main className="mx-auto max-w-[1100px] px-4 py-6 md:px-6">
-        {/* HERO */}
-        <section className="grid grid-cols-1 gap-6 md:grid-cols-2 md:items-start">
-          <div>
-            <h1 className="mb-2 text-[28px] font-semibold leading-tight md:text-[32px]">
-              Casa estilo patagónico – 4 dormitorios – vista al lago (Aldea del Este)
-            </h1>
-            <p className="text-[15px] leading-relaxed">
-              <strong>Aldea del Este – La Morena 4276, Bariloche.</strong> Arquitectura patagónica con vistas al lago
-              Nahuel Huapi desde ambientes principales. Lote <strong>874 m²</strong>, superficie cubierta{' '}
-              <strong>190 m²</strong>. Cochera doble. Accesos ágiles y cercanía a servicios.
-            </p>
-
-            <SectionCard variant="tint" className="mt-4">
-              <strong>¿Querés coordinar una visita?</strong>
-              <p className="mt-1 text-xs text-[var(--muted)]">
-                El botón de contacto está <strong>al final de esta página</strong>. Desde allí te respondo por WhatsApp
-                con la ficha y opciones de visita.
-              </p>
-            </SectionCard>
+  <body class="min-h-screen bg-[var(--bg)] text-[var(--ink)]">
+    <!-- Header de marca -->
+    <header class="border-b border-[var(--line)]">
+      <div class="mx-auto container-w px-4 py-3 md:px-6 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[var(--brand)] text-[var(--brand-ink)] font-bold">N</span>
+          <div class="leading-tight">
+            <div class="font-semibold">Natalia González</div>
+            <div class="text-xs text-[var(--muted)]">Martillera Pública · Bariloche</div>
           </div>
-
-          <div>
-            <ImageGrid items={images} />
-          </div>
-        </section>
-
-        {/* STATS CLAVE */}
-        <section className="mt-8">
-          <h2 className="mb-3 text-xl font-semibold">Datos clave</h2>
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
-            <FeatureStat icon={<Bed size={18} />} title="Dormitorios" value="4 + escritorio" />
-            <FeatureStat icon={<Bath size={18} />} title="Baños" value="2" />
-            <FeatureStat icon={<CarFront size={18} />} title="Cocheras" value="2" />
-            <FeatureStat icon={<Ruler size={18} />} title="Cubiertos" value="190 m²" />
-            <FeatureStat icon={<HomeIcon size={18} />} title="Lote" value="874 m²" />
-          </div>
-        </section>
-
-        {/* HIGHLIGHTS */}
-        <section className="mt-8">
-          <h2 className="mb-3 text-xl font-semibold">Highlights</h2>
-          <SectionCard>
-            <div>
-              <TagChip>Apto crédito hipotecario</TagChip>
-              <TagChip>4 dormitorios + escritorio</TagChip>
-              <TagChip>2 baños</TagChip>
-              <TagChip>Vista al lago</TagChip>
-              <TagChip>Lote 874 m²</TagChip>
-              <TagChip>Cubiertos 190 m²</TagChip>
-              <TagChip>Calefacción por radiadores</TagChip>
-              <TagChip>Cochera para 2 autos</TagChip>
-              <TagChip>Orientación Norte</TagChip>
-              <TagChip>Antigüedad: 23 años</TagChip>
-            </div>
-          </SectionCard>
-        </section>
-
-        {/* DESCRIPCIÓN */}
-        <section className="mt-8">
-          <h2 className="mb-3 text-xl font-semibold">Descripción breve</h2>
-          <div className="space-y-3">
-            <p className="text-[15px] leading-relaxed">
-              Distribución: living-comedor con hogar y ventanales a vistas, cocina amplia, dormitorio principal y escritorio o Vestidor (en
-              planta alta con Vista al Lago), tres dormitorios en PB, dos baños completos y lavadero.
-              Exterior: jardín, deck y cochera doble cubierta.
-            </p>
-            <p className="text-[15px] leading-relaxed">
-              Terminaciones en piedra y madera; carpinterías de calidad y buena iluminación natural. Servicios: luz, gas
-              y agua. Sistema de calefacción por radiadores en todos los ambientes.
-            </p>
-          </div>
-        </section>
-
-        {/* INFORMACIÓN COMERCIAL + CTA */}
-        <section id="consultas" className="mt-8">
-          <h2 className="mb-3 text-xl font-semibold">Información comercial</h2>
-          <SectionCard>
-            <div className="space-y-2 text-[15px]">
-              <p>
-                <strong>VALOR:</strong> USD 296.000
-              </p>
-              <p>
-                <strong>Condiciones:</strong> apto crédito hipotecario (sujeto a calificación y tasación bancaria).
-              </p>
-              <p>
-                <strong>Visitas:</strong> con coordinación previa.
-              </p>
-            </div>
-
-            <div className="mt-4 space-y-3">
-              {/* Primero: Ver ubicación */}
-              <div>
-                <a
-                  href="#mapa"
-                  className="inline-flex items-center justify-center rounded-full border border-[var(--ink)] px-5 py-3 text-sm font-medium text-[var(--ink)] hover:bg-black/5"
-                >
-                  Ver ubicación
-                </a>
-              </div>
-
-              {/* Debajo: los dos contactos */}
-              <div className="flex flex-wrap gap-3">
-                <CTAButton id="whatsapp-buyvisit" href={whatsappHref} variant="primary" onClick={onWhatsAppClick}>
-                  Escribime por WhatsApp
-                </CTAButton>
-                <button
-                  type="button"
-                  onClick={() => setShowEmailForm((v) => !v)}
-                  className="inline-flex items-center justify-center rounded-full border border-[var(--ink)] px-5 py-3 text-sm font-medium text-[var(--ink)] hover:bg-black/5"
-                  aria-expanded={showEmailForm}
-                  aria-controls="email-form-panel"
-                >
-                  Prefiero contacto por email
-                </button>
-              </div>
-            </div>
-
-            <p className="mt-2 text-xs text-[var(--muted)]">
-              Coordinamos por WhatsApp para agilizar, pero si preferís email, podés usar el formulario alternativo.
-            </p>
-
-            {/* Panel plegable con el formulario por email */}
-            <div
-              id="email-form-panel"
-              className={`mt-4 overflow-hidden transition-all duration-300 ${
-                showEmailForm ? 'max-h-[1200px] opacity-100' : 'max-h-0 opacity-0'
-              }`}
-            >
-              <EmailLeadForm
-                propertyId={PROPERTY_ID}
-                propertyTitle={PROPERTY_TITLE}
-                recipientEmail={RECIPIENT_EMAIL}
-              />
-            </div>
-          </SectionCard>
-        </section>
-
-        {/* MAPA */}
-        <section id="mapa" className="mt-8">
-          <MapEmbed
-            title="Ubicación aproximada"
-            query="La Morena 4276, San Carlos de Bariloche, Río Negro, Argentina"
-            hint="La ubicación es aproximada. Solicitá la dirección exacta al coordinar la visita."
-          />
-        </section>
-      </main>
-
-      {/* FOOTER */}
-      <footer className="border-t border-[var(--line)]">
-        <div className="mx-auto max-w-[1100px] px-4 py-4 text-xs text-[var(--muted)] md:px-6">
-          © {year} Natalia González · Martillera Pública. Bariloche.
         </div>
-      </footer>
+        <nav class="hidden md:flex items-center gap-6 text-sm">
+          <a href="#consultas" class="hover:underline">Consultas</a>
+          <a href="#mapa" class="hover:underline">Ubicación</a>
+        </nav>
+      </div>
+    </header>
 
-      {/* CTA flotante (visible sólo en mobile) */}
-      <CTAFloat id="whatsapp-buyvisit-floating" href={whatsappHref} label="Escribime por WhatsApp" onClick={onWhatsAppClick} />
+    <main class="mx-auto container-w px-4 py-6 md:px-6">
+      <!-- HERO -->
+      <section class="grid grid-cols-1 gap-6 md:grid-cols-2 md:items-start">
+        <div>
+          <h1 class="mb-2 text-[28px] font-semibold leading-tight md:text-[32px]">
+            Casa estilo patagónico – 4 dormitorios – vista al lago (Aldea del Este)
+          </h1>
+          <p class="text-[15px] leading-relaxed">
+            <strong>Aldea del Este – La Morena 4276, Bariloche.</strong> Arquitectura patagónica con vistas al lago
+            Nahuel Huapi desde ambientes principales. Lote <strong>874 m²</strong>, superficie cubierta
+            <strong>190 m²</strong>. Cochera doble. Accesos ágiles y cercanía a servicios.
+          </p>
 
-      {/* Modal de lead rápido para WhatsApp */}
-      <QuickWhatsAppLeadModal
-        open={showWaModal}
-        onClose={() => setShowWaModal(false)}
-        phone={WHATSAPP_PHONE}
-        propertyId={PROPERTY_ID}
-        propertyTitle={PROPERTY_TITLE}
-      />
+          <div class="mt-4 rounded-2xl border border-[var(--line)] bg-white p-4">
+            <strong>¿Querés coordinar una visita?</strong>
+            <p class="mt-1 text-xs text-[var(--muted)]">
+              El botón de contacto está <strong>al final de esta página</strong>. Desde allí te respondo por WhatsApp
+              con la ficha y opciones de visita.
+            </p>
+          </div>
+        </div>
+
+        <!-- Grilla de imágenes -->
+        <div>
+          <div class="grid grid-cols-3 grid-rows-2 gap-2">
+            <img src="img/portada.jpg" alt="Fachada y jardín – Aldea del Este" class="h-36 w-full rounded-lg object-cover col-span-2 row-span-2">
+            <img src="img/living.jpg" alt="Living con vista al lago" class="h-18 w-full rounded-lg object-cover">
+            <img src="img/dormitorio.jpg" alt="Dormitorio principal" class="h-18 w-full rounded-lg object-cover">
+            <img src="img/cocina.jpg" alt="Cocina" class="h-18 w-full rounded-lg object-cover">
+            <img src="img/galeria.jpg" alt="Galería y jardín" class="h-18 w-full rounded-lg object-cover">
+            <img src="img/vista.jpg" alt="Vista al lago" class="h-18 w-full rounded-lg object-cover">
+          </div>
+          <p class="mt-2 text-xs text-[var(--muted)]">Subí estos archivos a /img. Podés cambiar nombres si ajustás los src.</p>
+        </div>
+      </section>
+
+      <!-- STATS CLAVE -->
+      <section class="mt-8">
+        <h2 class="mb-3 text-xl font-semibold">Datos clave</h2>
+        <div class="grid grid-cols-2 gap-3 md:grid-cols-5">
+          <div class="rounded-2xl border border-[var(--line)] bg-white p-3">
+            <div class="text-sm text-[var(--muted)] flex items-center gap-2"><span>🛏️</span>Dormitorios</div>
+            <div class="text-[15px] font-semibold mt-1">4 + escritorio</div>
+          </div>
+          <div class="rounded-2xl border border-[var(--line)] bg-white p-3">
+            <div class="text-sm text-[var(--muted)] flex items-center gap-2"><span>🛁</span>Baños</div>
+            <div class="text-[15px] font-semibold mt-1">2</div>
+          </div>
+          <div class="rounded-2xl border border-[var(--line)] bg-white p-3">
+            <div class="text-sm text-[var(--muted)] flex items-center gap-2"><span>🚗</span>Cocheras</div>
+            <div class="text-[15px] font-semibold mt-1">2</div>
+          </div>
+          <div class="rounded-2xl border border-[var(--line)] bg-white p-3">
+            <div class="text-sm text-[var(--muted)] flex items-center gap-2"><span>📏</span>Cubiertos</div>
+            <div class="text-[15px] font-semibold mt-1">190 m²</div>
+          </div>
+          <div class="rounded-2xl border border-[var(--line)] bg-white p-3">
+            <div class="text-sm text-[var(--muted)] flex items-center gap-2"><span>🏡</span>Lote</div>
+            <div class="text-[15px] font-semibold mt-1">874 m²</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HIGHLIGHTS -->
+      <section class="mt-8">
+        <h2 class="mb-3 text-xl font-semibold">Highlights</h2>
+        <div class="rounded-2xl border border-[var(--line)] bg-white p-4">
+          <div class="flex flex-wrap gap-2">
+            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-slate-50 px-3 py-1 text-xs">Apto crédito hipotecario</span>
+            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-slate-50 px-3 py-1 text-xs">4 dormitorios + escritorio</span>
+            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-slate-50 px-3 py-1 text-xs">2 baños</span>
+            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-slate-50 px-3 py-1 text-xs">Vista al lago</span>
+            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-slate-50 px-3 py-1 text-xs">Lote 874 m²</span>
+            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-slate-50 px-3 py-1 text-xs">Cubiertos 190 m²</span>
+            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-slate-50 px-3 py-1 text-xs">Radiadores</span>
+            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-slate-50 px-3 py-1 text-xs">Cochera doble</span>
+            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-slate-50 px-3 py-1 text-xs">Orientación Norte</span>
+            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-slate-50 px-3 py-1 text-xs">Antigüedad: 23 años</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- DESCRIPCIÓN -->
+      <section class="mt-8">
+        <h2 class="mb-3 text-xl font-semibold">Descripción breve</h2>
+        <div class="space-y-3">
+          <p class="text-[15px] leading-relaxed">
+            Distribución: living-comedor con hogar y ventanales a vistas, cocina amplia, dormitorio principal y escritorio o vestidor en PA,
+            tres dormitorios secundarios, dos baños completos y lavadero.
+          </p>
+          <p class="text-[15px] leading-relaxed">
+            Terminaciones en piedra y madera; carpinterías de calidad y buena iluminación natural. Servicios: luz, gas
+            y agua. Sistema de calefacción por radiadores en todos los ambientes.
+          </p>
+        </div>
+      </section>
+
+      <!-- INFORMACIÓN COMERCIAL + CTA -->
+      <section id="consultas" class="mt-8">
+        <h2 class="mb-3 text-xl font-semibold">Información comercial</h2>
+        <div class="rounded-2xl border border-[var(--line)] bg-white p-4">
+          <div class="space-y-2 text-[15px]">
+            <p><strong>VALOR:</strong> <span id="price">USD 296.000</span></p>
+            <p><strong>Condiciones:</strong> apto crédito hipotecario (sujeto a calificación y tasación bancaria).</p>
+            <p><strong>Visitas:</strong> con coordinación previa.</p>
+          </div>
+
+          <!-- Primero: Ver ubicación -->
+          <div class="mt-4">
+            <a href="#mapa"
+               class="inline-flex items-center justify-center rounded-full border border-[var(--ink)] px-5 py-3 text-sm font-medium text-[var(--ink)] hover:bg-black/5">
+              Ver ubicación
+            </a>
+          </div>
+
+          <!-- Debajo: contactos -->
+          <div class="mt-3 flex flex-col gap-3 sm:flex-row">
+            <a id="waCta"
+               href="#"
+               class="inline-flex items-center justify-center rounded-full bg-[var(--brand)] px-5 py-3 text-sm font-semibold text-[var(--brand-ink)] transition hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2">
+              Escribime por WhatsApp
+            </a>
+            <button id="emailToggle"
+               type="button"
+               class="inline-flex items-center justify-center rounded-full border border-[var(--ink)] px-5 py-3 text-sm font-medium text-[var(--ink)] hover:bg-black/5">
+              Prefiero contacto por email
+            </button>
+          </div>
+
+          <!-- Panel plegable con el formulario por email (placeholder) -->
+          <div id="emailPanel" class="collapse max-h-0 opacity-0 mt-3">
+            <form class="rounded-2xl border border-[var(--line)] bg-white p-4 md:p-5" onsubmit="return false" aria-label="Formulario de contacto por email">
+              <div class="mb-3 rounded-lg border border-amber-300 bg-amber-50 p-3 text-xs text-amber-900">
+                Próximamente conectaremos este formulario a Google Sheets / Formspree. Por ahora no envía.
+              </div>
+
+              <div class="mb-3">
+                <label for="name" class="mb-1 block text-sm font-medium text-[var(--accent)]">Nombre completo <span class="text-red-600">*</span></label>
+                <input id="name" type="text" class="w-full rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[var(--brand)]" placeholder="Tu nombre" autocomplete="name" required />
+              </div>
+
+              <div class="mb-3">
+                <label for="email" class="mb-1 block text-sm font-medium text-[var(--accent)]">Email <span class="text-red-600">*</span></label>
+                <input id="email" type="email" class="w-full rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[var(--brand)]" placeholder="nombre@correo.com" autocomplete="email" required />
+              </div>
+
+              <div class="mb-3">
+                <label for="message" class="mb-1 block text-sm font-medium text-[var(--accent)]">Mensaje (opcional)</label>
+                <textarea id="message" rows="4" class="w-full rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[var(--brand)]">Hola, me interesa esta propiedad. Prefiero contacto por email. ¡Gracias!</textarea>
+              </div>
+
+              <div class="mt-4 flex items-center gap-3">
+                <button type="button" disabled class="inline-flex items-center justify-center rounded-full bg-[var(--brand)] px-5 py-2.5 text-sm font-semibold text-[var(--brand-ink)] opacity-60 cursor-not-allowed">Enviar (próximamente)</button>
+                <span class="text-xs text-[var(--muted)]">Lo activamos cuando tengas el endpoint.</span>
+              </div>
+            </form>
+          </div>
+
+          <p class="mt-2 text-xs text-[var(--muted)]">
+            Coordinamos por WhatsApp para agilizar, pero si preferís email, podés usar el formulario alternativo.
+          </p>
+        </div>
+      </section>
+
+      <!-- MAPA -->
+      <section id="mapa" class="mt-8">
+        <h2 class="mb-3 text-xl">Ubicación aproximada</h2>
+        <div class="rounded-2xl border border-[var(--line)] bg-white p-4">
+          <div class="aspect-[16/10] w-full overflow-hidden rounded-xl border border-[var(--line)]">
+            <iframe id="mapFrame"
+                    title="Mapa"
+                    src=""
+                    loading="lazy"
+                    class="h-full w-full"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    allowfullscreen>
+            </iframe>
+          </div>
+          <p class="mt-2 text-xs text-[var(--muted)]">La ubicación es aproximada. Solicitá la dirección exacta al coordinar la visita.</p>
+          <a id="mapLink"
+             href="#"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="mt-3 inline-flex text-sm font-medium text-[var(--brand)] underline-offset-2 hover:underline">
+            Abrir en Google Maps
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-[var(--line)]">
+      <div class="mx-auto container-w px-4 py-4 text-xs text-[var(--muted)] md:px-6">
+        © <span id="year"></span> Natalia González · Martillera Pública. Bariloche.
+      </div>
+    </footer>
+
+    <!-- CTA flotante (mobile) -->
+    <div aria-label="Barra de acción rápida"
+         class="fixed inset-x-0 bottom-0 z-50 md:hidden"
+         style="padding-bottom: max(env(safe-area-inset-bottom), 0px)">
+      <div class="mx-auto w-full container-w px-4 pb-3">
+        <a id="waCtaFloating"
+           href="#"
+           class="block w-full rounded-full border border-transparent bg-[var(--brand)] px-5 py-3 text-center text-sm font-semibold text-[var(--brand-ink)] shadow-sm transition hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2">
+          Escribime por WhatsApp
+        </a>
+      </div>
     </div>
-  )
-}
+
+    <!-- Modal WhatsApp Lead -->
+    <div id="waModal" class="fixed inset-0 z-[60] hidden items-end justify-center bg-black/40 p-0 md:items-center md:p-4">
+      <div class="w-full rounded-t-2xl bg-white p-4 shadow-xl md:max-w-md md:rounded-2xl md:p-5">
+        <div class="mb-3">
+          <h3 class="text-lg font-semibold text-[var(--accent)]">Antes de ir a WhatsApp</h3>
+          <p class="mt-1 text-sm text-[var(--muted)]">Dejanos tu nombre para agendar la consulta. Luego abrimos el chat.</p>
+        </div>
+
+        <div class="mb-3">
+          <label for="wa_name" class="mb-1 block text-sm font-medium text-[var(--accent)]">
+            Nombre completo <span class="text-red-600">*</span>
+          </label>
+          <input id="wa_name"
+                 type="text"
+                 class="w-full rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[var(--brand)]"
+                 placeholder="Tu nombre"
+                 autocomplete="name" />
+          <p id="wa_error" class="mt-1 text-xs text-red-600 hidden">Ingresá tu nombre para continuar.</p>
+        </div>
+
+        <div class="mt-4 flex items-center justify-end gap-3">
+          <button type="button" id="waCancel"
+                  class="inline-flex items-center justify-center rounded-full border border-[var(--ink)] px-4 py-2 text-sm font-medium text-[var(--ink)] hover:bg-black/5 focus:outline-none focus:ring-2 focus:ring-[var(--ink)] focus:ring-offset-2">
+            Cancelar
+          </button>
+          <button type="button" id="waContinue"
+                  class="inline-flex items-center justify-center rounded-full bg-[var(--brand)] px-5 py-2.5 text-sm font-semibold text-[var(--brand-ink)] transition hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2">
+            Continuar a WhatsApp
+          </button>
+        </div>
+
+        <p class="mt-2 text-xs text-[var(--muted)]">Sólo usaremos tus datos para coordinar la visita.</p>
+      </div>
+    </div>
+
+    <!-- Script: configuración básica y manejadores -->
+    <script>
+      // CONFIG: Reemplazá estos valores por los reales
+      const PHONE = '5492944635083'; // <- Reemplazar con tu número (E.164, sin +, sin espacios)
+      const PROPERTY_TITLE = 'Casa estilo patagónico – Aldea del Este';
+      const ADDRESS = 'La Morena 4276, San Carlos de Bariloche, Río Negro, Argentina';
+
+      // Año dinámico
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      // Mapa
+      const encoded = encodeURIComponent(ADDRESS);
+      const mapFrame = document.getElementById('mapFrame');
+      const mapLink = document.getElementById('mapLink');
+      if (mapFrame) mapFrame.src = `https://www.google.com/maps?q=${encoded}&output=embed`;
+      if (mapLink) mapLink.href = `https://www.google.com/maps/search/?api=1&query=${encoded}`;
+
+      // WhatsApp helpers
+      function buildWhatsAppUrl(phone, message) {
+        const base = 'https://wa.me/' + phone;
+        const text = encodeURIComponent(message);
+        return `${base}?text=${text}`;
+      }
+
+      function openWaWithName(name) {
+        const msg = `Hola, soy ${name}. Me interesa la propiedad "${PROPERTY_TITLE}". ¿Podemos coordinar una visita? (Enviado desde la landing)`;
+        const waUrl = buildWhatsAppUrl(PHONE, msg);
+        window.open(waUrl, '_blank', 'noopener,noreferrer');
+      }
+
+      // Modal
+      const waModal = document.getElementById('waModal');
+      const waName = document.getElementById('wa_name');
+      const waError = document.getElementById('wa_error');
+      const waCancel = document.getElementById('waCancel');
+      const waContinue = document.getElementById('waContinue');
+
+      function showModal() {
+        waModal.classList.remove('hidden');
+        waModal.classList.add('flex');
+        setTimeout(() => waName && waName.focus(), 50);
+      }
+      function hideModal() {
+        waModal.classList.remove('flex');
+        waModal.classList.add('hidden');
+      }
+
+      // CTA handlers
+      function onWaClick(e) {
+        e.preventDefault();
+        showModal();
+      }
+      document.getElementById('waCta')?.addEventListener('click', onWaClick);
+      document.getElementById('waCtaFloating')?.addEventListener('click', onWaClick);
+
+      waCancel?.addEventListener('click', hideModal);
+      waContinue?.addEventListener('click', () => {
+        const name = (waName?.value || '').trim();
+        if (!name || name.length < 2) {
+          waError?.classList.remove('hidden');
+          waName?.focus();
+          return;
+        }
+        waError?.classList.add('hidden');
+        openWaWithName(name);
+        hideModal();
+      });
+
+      // Email panel toggle
+      const emailToggle = document.getElementById('emailToggle');
+      const emailPanel = document.getElementById('emailPanel');
+      let emailOpen = false;
+      emailToggle?.addEventListener('click', () => {
+        emailOpen = !emailOpen;
+        if (emailOpen) {
+          emailPanel.style.maxHeight = '1200px';
+          emailPanel.style.opacity = '1';
+        } else {
+          emailPanel.style.maxHeight = '0px';
+          emailPanel.style.opacity = '0';
+        }
+      });
+    </script>
+  </body>
+</html>
