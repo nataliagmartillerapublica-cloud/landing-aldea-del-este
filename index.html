@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Terreno 4.287 m² con cabaña – Casa de Piedra</title>
+  <meta name="description" content="Terreno 4.287 m² con cabaña en B° Casa de Piedra (Bariloche). Ingreso privado, frente a plaza, vistas al Nahuel Huapi. Pida ficha y coordine visita por WhatsApp." />
+  <style>
+    *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Helvetica Neue',Arial,'Noto Sans',sans-serif;color:#111;background:#fff}
+    .container{max-width:1000px;margin:0 auto;padding:24px}
+    .header{position:sticky;top:0;background:#fffcc;backdrop-filter:saturate(180%) blur(6px);border-bottom:1px solid #e5e5e5}
+    .row{display:grid;grid-template-columns:1fr;gap:24px}
+    @media(min-width:900px){.row{grid-template-columns:1.1fr .9fr}}
+    .pill{display:inline-block;padding:10px 16px;border:1px solid #111;border-radius:999px;text-decoration:none;color:#111}
+    .pill.secondary{border-color:#c9c9c9}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;background:#f3f3f3;padding:8px;border-radius:16px}
+    .ph{height:120px;background:#e5e5e5;border-radius:12px} .img{width:100%;height:120px;object-fit:cover;border-radius:12px} 
+    .card{border:1px solid #e5e5e5;border-radius:16px;padding:16px}
+    .muted{color:#666;font-size:12px}
+    .h1{font-size:28px;margin:0 0 8px 0}
+    .h2{font-size:20px;margin:24px 0 8px}
+    .btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+    footer{border-top:1px solid #e5e5e5}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-top:12px;padding-bottom:12px">
+      <strong>Natalia González · Martillera (Mat. 377-RP-21 Fº456 TºII)</strong>
+      <a id="whatsapp-top" class="pill secondary" href="#">WhatsApp</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="row" style="margin-top:24px">
+      <div>
+        <h1 class="h1">Terreno 4.287 m² con cabaña en B° Casa de Piedra</h1>
+        <p>Ingreso privado, frente a plaza, vistas al Nahuel Huapi. Ubicación: <strong>Primera Diagonal al 11.000 – Bariloche</strong>. A metros de la parada de transporte público. Acceso ágil por Camino Antiguo hacia Cerro Catedral.</p>
+        <div class="btns">
+          <a id="whatsapp-cta1" class="pill" href="#">Quiero la ficha + ubicación</a>
+          <a id="whatsapp-cta2" class="pill secondary" href="#">Coordinar visita</a>
+        </div>
+        <p class="muted" style="margin-top:8px">Al contactarte por WhatsApp recibís la ficha resumida y opciones de visita.</p>
+      </div>
+      <div>
+        <div class="grid">
+          <!-- Reemplazá estos src por tus archivos reales en /img (subidos al repo) -->
+          <img src="/img/portada.jpg" alt="Fachada y jardín – Aldea del Este" class="img" loading="eager" />
+          <img src="/img/living.jpg" alt="Living con vista al lago – Aldea del Este" class="img" loading="lazy" />
+          <img src="/img/dormitorio.jpg" alt="Dormitorio principal – Aldea del Este" class="img" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="h2">Características</h2>
+      <div class="row">
+        <div class="card">Superficie 4.287 m² · Orientación Norte</div>
+        <div class="card">Cabaña aprox. 70 m²</div>
+        <div class="card">Ingreso privado y frente a plaza</div>
+        <div class="card">Servicios: luz · gas · agua</div>
+        <div class="card">Vistas al Nahuel Huapi desde cotas superiores</div>
+        <div class="card">FOT 35% (según normativa vigente)</div>
+        <div class="card">Contrato de alquiler vigente con cláusula de venta</div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="h2">Descripción breve</h2>
+      <p>Topografía: combinación de áreas niveladas y sectores con pendientes; admite proyecto escalonado y aprovechamiento de visuales. Cota aprox.: 800 m s.n.m. Visitas con coordinación previa.</p>
+      <div class="btns">
+        <a id="whatsapp-cta3" class="pill" href="#">Pedir ficha + ubicación</a>
+        <a id="whatsapp-cta4" class="pill secondary" href="#">Hablar ahora por WhatsApp</a>
+      </div>
+      <p class="muted" style="margin-top:16px">Nota al interesado: parámetros urbanísticos (FOT/FOS, alturas, retiros, usos), superficies y condiciones de servicios deberán ser verificados con profesionales matriculados y organismos competentes.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container muted" style="padding:16px 24px">© <span id="year"></span> Natalia González · Martillera Pública. Bariloche.</div>
+  </footer>
+
+  <script>
+    // Reemplazá ACA con tu número real, formato 549294XXXXXXX
+    var whatsappLink = 'https://wa.me/5492944635083?text=Quiero%20informaci%C3%B3n%20del%20terreno%20en%20Casa%20de%20Piedra&utm_source=landing&utm_medium=cta&utm_campaign=cdp_v1';
+    ['whatsapp-top','whatsapp-cta1','whatsapp-cta2','whatsapp-cta3','whatsapp-cta4'].forEach(function(id){
+      var a=document.getElementById(id); if(a) a.href=whatsappLink;
+    });
+    document.getElementById('year').textContent=new Date().getFullYear();
+  </script>
+</body>
+</html>
