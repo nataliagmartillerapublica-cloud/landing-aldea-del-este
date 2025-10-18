@@ -167,11 +167,15 @@
           </div>
 
           <div class="mt-3 flex flex-col gap-3 sm:flex-row">
-            <a id="waCta" href="#"
+            <!-- Fallback HREFs por si el JS no carga -->
+            <a id="waCta"
+               href="https://api.whatsapp.com/send?phone=5492944635083"
+               target="_blank" rel="noopener"
                class="inline-flex items-center justify-center rounded-full bg-[var(--brand)] px-5 py-3 text-sm font-semibold text-[var(--brand-ink)] hover:opacity-95">
               Escribime por WhatsApp
             </a>
-            <a id="emailCta" href="#"
+            <a id="emailCta"
+               href="mailto:nataliagonzalezmartillerapublica@ngespacios.com.ar?subject=Consulta%20Casa%20Aldea%20del%20Este"
                class="inline-flex items-center justify-center rounded-full border border-[var(--ink)] px-5 py-3 text-sm font-medium text-[var(--ink)] hover:bg-black/5">
               Prefiero contacto por email
             </a>
@@ -266,35 +270,35 @@
     </footer>
 
     <!-- CTA flotante (mobile) -->
-    <a id="waFloat" href="#"
+    <a id="waFloat"
+       href="https://api.whatsapp.com/send?phone=5492944635083"
+       target="_blank" rel="noopener"
        class="fixed inset-x-4 bottom-4 sm:hidden inline-flex items-center justify-center rounded-full bg-[var(--brand)] px-5 py-3 text-sm font-semibold text-[var(--brand-ink)] shadow-lg hover:opacity-95">
       Escribime por WhatsApp
     </a>
 
     <script>
       // ---------- Config ----------
-      const WA_NUMBER = "5492944635083";
-      const EMAIL = "nataliagonzalezmartillerapublica@ngespacios.com.ar";
-      const SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyPjlCrv6A2pkzOWPNXzcVYeA6fjJdS8vep9Ki8mo_7mrmx-JTTOM9XYDrYbEzz_LX2eQ/exec";
+      var WA_NUMBER = "5492944635083";
+      var EMAIL = "nataliagonzalezmartillerapublica@ngespacios.com.ar";
+      var SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyPjlCrv6A2pkzOWPNXzcVYeA6fjJdS8vep9Ki8mo_7mrmx-JTTOM9XYDrYbEzz_LX2eQ/exec";
 
-      const title = "Casa estilo patagónico – Aldea del Este";
-      const url = window.location.origin + window.location.pathname;
+      var title = "Casa estilo patagónico – Aldea del Este";
+      var url = window.location.origin + window.location.pathname;
 
-      // Utils
+      function enc(s){ return encodeURIComponent(s); }
       function buildWaLink(number, text) {
-        const enc = encodeURIComponent(text);
-        return number ? `https://wa.me/${number}?text=${enc}` : `https://wa.me/?text=${enc}`;
+        // api.whatsapp.com es más compatible en móviles/IG
+        return "https://api.whatsapp.com/send?phone=" + number + "&text=" + enc(text);
       }
       function buildMailto(email, subject, body) {
-        const sub = encodeURIComponent(subject);
-        const bod = encodeURIComponent(body);
-        return `mailto:${email}?subject=${sub}&body=${bod}`;
+        return "mailto:" + email + "?subject=" + enc(subject) + "&body=" + enc(body);
       }
-      function setStatus(text, type = "info") {
-        const el = document.getElementById("formStatus");
+      function setStatus(text, type) {
+        var el = document.getElementById("formStatus");
         if (!el) return;
         el.textContent = text;
-        el.className = "text-xs " + (type === "error" ? "text-red-600" : type === "success" ? "text-green-600" : "text-[var(--muted)]");
+        el.className = "text-xs " + (type==="error" ? "text-red-600" : type==="success" ? "text-green-600" : "text-[var(--muted)]");
       }
       function togglePanel(panel, expand) {
         if (!panel) return;
@@ -309,100 +313,150 @@
         }
       }
 
-      // Init
+      // Fallback Instagram (si bloquea el iframe)
+      (function(){
+        try {
+          var isIG = /Instagram|FBAN|FBAV/i.test(navigator.userAgent || "");
+          if (isIG) {
+            var wrap = document.getElementById('mapWrap');
+            if (wrap) {
+              wrap.innerHTML =
+                '<div class="p-4 text-center">' +
+                  '<p class="text-sm mb-2">Si no ves el mapa dentro de Instagram, abrilo en tu navegador o en Google Maps:</p>' +
+                  '<a href="https://www.google.com/maps/search/?api=1&query=La%20Morena%204276%2C%20R8400%20San%20Carlos%20de%20Bariloche%2C%20R%C3%ADo%20Negro%2C%20Argentina" target="_blank" rel="noopener" class="inline-flex items-center justify-center rounded-full bg-[var(--brand)] px-5 py-3 text-sm font-semibold text-[var(--brand-ink)] hover:opacity-95">Abrir en Google Maps</a>' +
+                '</div>';
+            }
+          }
+        } catch(e){ console.warn(e); }
+      })();
+
+      // Init seguro
       document.addEventListener('DOMContentLoaded', function(){
-        const priceText = (document.getElementById("price")?.textContent || "").trim();
-        const defaultMsg =
-          `Hola, me interesa la propiedad "${title}". ${priceText ? "Precio: " + priceText + ". " : ""}Vi el aviso en ${url}. ¿Podemos coordinar una visita?`;
+        try {
+          // Precio y mensaje por defecto
+          var priceEl = document.getElementById("price");
+          var priceText = priceEl ? (priceEl.textContent || "").trim() : "";
+          var defaultMsg = 'Hola, me interesa la propiedad "' + title + '". ' +
+            (priceText ? ("Precio: " + priceText + ". ") : "") +
+            "Vi el aviso en " + url + ". ¿Podemos coordinar una visita?";
 
-        // CTAs
-        const waHref = buildWaLink(WA_NUMBER, defaultMsg);
-        const mailHref = buildMailto(EMAIL, `Consulta: ${title}`, defaultMsg);
-        const waCta = document.getElementById("waCta");
-        const waFloat = document.getElementById("waFloat");
-        const emailCta = document.getElementById("emailCta");
-        if (waCta) waCta.href = waHref;
-        if (waFloat) waFloat.href = waHref;
-        if (emailCta) emailCta.href = mailHref;
+          // Setear/enriquecer CTAs (si el DOM existe)
+          var waHref = buildWaLink(WA_NUMBER, defaultMsg);
+          var mailHref = buildMailto(EMAIL, "Consulta: " + title, defaultMsg);
+          var waCta = document.getElementById("waCta");
+          var waFloat = document.getElementById("waFloat");
+          var emailCta = document.getElementById("emailCta");
+          if (waCta)   waCta.href = waHref;
+          if (waFloat) waFloat.href = waHref;
+          if (emailCta) emailCta.href = mailHref;
 
-        // Año footer
-        const yearEl = document.getElementById("year");
-        if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+          // Año footer
+          var yearEl = document.getElementById("year");
+          if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
-        // Form
-        const formPanel = document.getElementById("formPanel");
-        const formToggleBtn = document.getElementById("formToggleBtn");
-        const leadForm = document.getElementById("leadForm");
-        const cancelBtn = document.getElementById("cancelBtn");
-        let formOpen = false;
+          // Form & panel
+          var formPanel = document.getElementById("formPanel");
+          var formToggleBtn = document.getElementById("formToggleBtn");
+          var leadForm = document.getElementById("leadForm");
+          var cancelBtn = document.getElementById("cancelBtn");
+          var formOpen = false;
 
-        if (formPanel) togglePanel(formPanel, false); // cerrado por defecto
+          if (formPanel) togglePanel(formPanel, false); // cerrado por defecto
 
-        if (formToggleBtn && formPanel) {
-          formToggleBtn.addEventListener("click", () => {
-            formOpen = !formOpen;
-            togglePanel(formPanel, formOpen);
-            formToggleBtn.textContent = formOpen ? "Ocultar formulario" : "Completar formulario";
-          });
-        }
-        if (cancelBtn && formPanel) {
-          cancelBtn.addEventListener("click", () => {
-            formOpen = false;
-            togglePanel(formPanel, false);
-            if (formToggleBtn) formToggleBtn.textContent = "Completar formulario";
-            if (leadForm) leadForm.reset();
-            setStatus("");
-          });
-        }
+          if (formToggleBtn && formPanel) {
+            formToggleBtn.addEventListener("click", function(){
+              formOpen = !formOpen;
+              togglePanel(formPanel, formOpen);
+              formToggleBtn.textContent = formOpen ? "Ocultar formulario" : "Completar formulario";
+            });
+          }
+          if (cancelBtn && formPanel) {
+            cancelBtn.addEventListener("click", function(){
+              formOpen = false;
+              togglePanel(formPanel, false);
+              if (formToggleBtn) formToggleBtn.textContent = "Completar formulario";
+              if (leadForm) leadForm.reset();
+              setStatus("");
+            });
+          }
 
-        if (leadForm) {
-          leadForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            setStatus("Enviando…");
+          if (leadForm) {
+            leadForm.addEventListener("submit", async function(e){
+              e.preventDefault();
+              setStatus("Enviando…");
 
-            const data = {
-              name: leadForm.name.value.trim(),
-              email: leadForm.email.value.trim(),
-              phone: leadForm.phone.value.trim(),
-              message: leadForm.message.value.trim(),
-              consent: leadForm.consent.checked,
-              company: leadForm.company?.value || "",
-              title,
-              price: priceText,
-              page: url,
-              ts: new Date().toISOString()
-            };
+              var data = {
+                name:   (leadForm.name && leadForm.name.value || "").trim(),
+                email:  (leadForm.email && leadForm.email.value || "").trim(),
+                phone:  (leadForm.phone && leadForm.phone.value || "").trim(),
+                message:(leadForm.message && leadForm.message.value || "").trim(),
+                consent:(leadForm.consent && leadForm.consent.checked) || false,
+                company:(leadForm.company && leadForm.company.value) || "",
+                title:  title,
+                price:  priceText,
+                page:   url,
+                ts:     new Date().toISOString()
+              };
 
-            // Captura de UTMs y atribución
-            const p = new URLSearchParams(window.location.search);
-            data.utm_source   = p.get("utm_source")   || "";
-            data.utm_medium   = p.get("utm_medium")   || "";
-            data.utm_campaign = p.get("utm_campaign") || "";
-            data.utm_content  = p.get("utm_content")  || "";
-            data.utm_term     = p.get("utm_term")     || "";
-            data.referrer     = document.referrer || "";
+              // UTMs/referrer
+              var p = new URLSearchParams(window.location.search || "");
+              data.utm_source   = p.get("utm_source")   || "";
+              data.utm_medium   = p.get("utm_medium")   || "";
+              data.utm_campaign = p.get("utm_campaign") || "";
+              data.utm_content  = p.get("utm_content")  || "";
+              data.utm_term     = p.get("utm_term")     || "";
+              data.referrer     = document.referrer || "";
 
-            // Validación
-            if (!data.name || !data.email || !data.message || !data.consent) {
-              setStatus("Completá los campos requeridos.", "error"); return;
-            }
-            if (data.company) { setStatus("Error de validación.", "error"); return; }
-
-            // Envío a Sheets si hay endpoint
-            if (SHEETS_ENDPOINT) {
-              try {
-                const res = await fetch(SHEETS_ENDPOINT, {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify(data),
-                  mode: "cors",
-                });
-                if (!res.ok) throw new Error("HTTP " + res.status);
-                setStatus("¡Consulta enviada! Te responderé a la brevedad.", "success");
-                leadForm.reset();
-                return;
-              } catch (err) {
-                console.error(err);
-                // Fallback a mailto si falla
+              // Validación
+              if (!data.name || !data.email || !data.message || !data.consent) {
+                setStatus("Completá los campos requeridos.", "error"); return;
               }
-            }
+              if (data.company) { setStatus("Error de validación.", "error"); return; }
+
+              // Envío a Sheets si hay endpoint
+              if (SHEETS_ENDPOINT) {
+                try {
+                  var res = await fetch(SHEETS_ENDPOINT, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data),
+                    mode: "cors"
+                  });
+                  if (!res.ok) throw new Error("HTTP " + res.status);
+                  setStatus("¡Consulta enviada! Te responderé a la brevedad.", "success");
+                  leadForm.reset();
+                  return;
+                } catch (err) {
+                  console.error("Sheets error:", err);
+                  // sigue al fallback email
+                }
+              }
+
+              // Fallback: email
+              var body =
+                "Nombre: " + data.name + "\n" +
+                "Email: "  + data.email + "\n" +
+                "Teléfono: " + (data.phone || "-") + "\n" +
+                "Propiedad: " + data.title + "\n" +
+                "Precio: " + (data.price || "-") + "\n" +
+                "Página: " + data.page + "\n\n" +
+                "Mensaje:\n" + data.message + "\n\n" +
+                "Atribución:\n" +
+                "utm_source: " + data.utm_source + "\n" +
+                "utm_medium: " + data.utm_medium + "\n" +
+                "utm_campaign: " + data.utm_campaign + "\n" +
+                "utm_content: " + data.utm_content + "\n" +
+                "utm_term: " + data.utm_term + "\n" +
+                "referrer: " + data.referrer;
+
+              window.location.href = buildMailto(EMAIL, "Consulta: " + title, body);
+              setStatus("Abriendo tu app de correo…", "info");
+            });
+          }
+        } catch (err) {
+          console.error("Init error:", err);
+        }
+      });
+    </script>
+  </body>
+</html>
