@@ -19,22 +19,14 @@
         --muted: #666666;
       }
       .container-w { max-width: 1100px; }
-      .fade-enter { opacity: 0 }
-      .fade-enter-active { opacity: 1; transition: opacity .2s ease }
-
-      /* Estilo del trigger del formulario (summary como botón) */
-      details.form-wrap > summary {
-        list-style: none;
-        cursor: pointer;
-        user-select: none;
+      .force-visible {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        max-height: none !important;
+        height: auto !important;
+        overflow: visible !important;
       }
-      details.form-wrap > summary::-webkit-details-marker { display: none; }
-      details.form-wrap > summary .btn {
-        display: inline-flex; align-items: center; justify-content: center;
-        border-radius: 9999px; border: 1px solid var(--ink);
-        padding: 0.75rem 1.25rem; font-size: .875rem; font-weight: 500;
-      }
-      details.form-wrap[open] > summary .btn { background: #0000000a; }
     </style>
   </head>
 
@@ -82,7 +74,7 @@
           <div class="mt-4 rounded-2xl border border-[var(--line)] bg-white p-4">
             <strong>¿Querés coordinar una visita?</strong>
             <p class="mt-1 text-xs text-[var(--muted)]">
-              El botón de contacto está <strong>al final</strong>. Te respondo por WhatsApp con la ficha y horarios.
+              Abajo tenés WhatsApp, Email y el formulario directo.
             </p>
           </div>
         </div>
@@ -100,49 +92,15 @@
         </div>
       </section>
 
-      <!-- STATS -->
+      <!-- DATOS -->
       <section class="mt-8">
         <h2 class="mb-3 text-xl font-semibold">Datos clave</h2>
         <div class="grid grid-cols-2 gap-3 md:grid-cols-5">
-          <div class="rounded-2xl border border-[var(--line)] bg-white p-3">
-            <div class="text-sm text-[var(--muted)] flex items-center gap-2">🛏️ Dormitorios</div>
-            <div class="text-[15px] font-semibold mt-1">4 + escritorio</div>
-          </div>
-          <div class="rounded-2xl border border-[var(--line)] bg-white p-3">
-            <div class="text-sm text-[var(--muted)] flex items-center gap-2">🛁 Baños</div>
-            <div class="text-[15px] font-semibold mt-1">2</div>
-          </div>
-          <div class="rounded-2xl border border-[var(--line)] bg-white p-3">
-            <div class="text-sm text-[var(--muted)] flex items-center gap-2">🚗 Cocheras</div>
-            <div class="text-[15px] font-semibold mt-1">2</div>
-          </div>
-          <div class="rounded-2xl border border-[var(--line)] bg-white p-3">
-            <div class="text-sm text-[var(--muted)] flex items-center gap-2">📏 Cubiertos</div>
-            <div class="text-[15px] font-semibold mt-1">190 m²</div>
-          </div>
-          <div class="rounded-2xl border border-[var(--line)] bg-white p-3">
-            <div class="text-sm text-[var(--muted)] flex items-center gap-2">🏡 Lote</div>
-            <div class="text-[15px] font-semibold mt-1">874 m²</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- HIGHLIGHTS -->
-      <section class="mt-8">
-        <h2 class="mb-3 text-xl font-semibold">Highlights</h2>
-        <div class="rounded-2xl border border-[var(--line)] bg-white p-4">
-          <div class="flex flex-wrap gap-2">
-            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs">Apto crédito hipotecario</span>
-            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs">4 dormitorios + escritorio</span>
-            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs">2 baños</span>
-            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs">Vista al lago</span>
-            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs">Lote 874 m²</span>
-            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs">Cubiertos 190 m²</span>
-            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs">Radiadores</span>
-            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs">Cochera doble</span>
-            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs">Orientación Norte</span>
-            <span class="inline-flex items-center rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs">Antigüedad: 23 años</span>
-          </div>
+          <div class="rounded-2xl border border-[var(--line)] bg-white p-3"><div class="text-sm text-[var(--muted)]">🛏️ Dormitorios</div><div class="text-[15px] font-semibold mt-1">4 + escritorio</div></div>
+          <div class="rounded-2xl border border-[var(--line)] bg-white p-3"><div class="text-sm text-[var(--muted)]">🛁 Baños</div><div class="text-[15px] font-semibold mt-1">2</div></div>
+          <div class="rounded-2xl border border-[var(--line)] bg-white p-3"><div class="text-sm text-[var(--muted)]">🚗 Cocheras</div><div class="text-[15px] font-semibold mt-1">2</div></div>
+          <div class="rounded-2xl border border-[var(--line)] bg-white p-3"><div class="text-sm text-[var(--muted)]">📏 Cubiertos</div><div class="text-[15px] font-semibold mt-1">190 m²</div></div>
+          <div class="rounded-2xl border border-[var(--line)] bg-white p-3"><div class="text-sm text-[var(--muted)]">🏡 Lote</div><div class="text-[15px] font-semibold mt-1">874 m²</div></div>
         </div>
       </section>
 
@@ -163,24 +121,15 @@
         </div>
       </section>
 
-      <!-- INFO COMERCIAL + CTA + FORM -->
+      <!-- CONTACTO -->
       <section id="consultas" class="mt-8">
-        <h2 class="mb-3 text-xl font-semibold">Información comercial</h2>
-        <div class="rounded-2xl border border-[var(--line)] bg-white p-4">
-          <div class="space-y-2 text-[15px]">
-            <p><strong>VALOR:</strong> <span id="price">USD 296.000</span></p>
-            <p><strong>Visitas:</strong> con coordinación previa.</p>
-          </div>
+        <h2 class="mb-3 text-xl font-semibold">Contacto y consultas</h2>
 
-          <div class="mt-4">
-            <a href="#mapa"
-               class="inline-flex items-center justify-center rounded-full border border-[var(--ink)] px-5 py-3 text-sm font-medium text-[var(--ink)] hover:bg-black/5">
-              Ver ubicación
-            </a>
-          </div>
+        <div class="rounded-2xl border border-[var(--line)] bg-white p-4">
+          <p class="text-[15px]">Elegí el medio que prefieras o completá el formulario:</p>
 
           <div class="mt-3 flex flex-col gap-3 sm:flex-row">
-            <!-- Fallback HREFs por si el JS no carga -->
+            <!-- Fallbacks en el href -->
             <a id="waCta"
                href="https://api.whatsapp.com/send?phone=5492944635083&text=Hola%2C%20me%20interesa%20la%20propiedad."
                target="_blank" rel="noopener"
@@ -194,29 +143,26 @@
             </a>
           </div>
 
-          <!-- FORM con <details> (cerrado por defecto, sin JS para abrir) -->
-          <details class="form-wrap mt-4 rounded-xl border border-[var(--line)] bg-white/60">
-            <summary class="p-3">
-              <span class="btn">Completar formulario</span>
-            </summary>
-            <form id="leadForm" class="grid grid-cols-1 gap-3 p-4">
+          <!-- FORM siempre visible -->
+          <div id="formBlock" class="force-visible mt-4 rounded-xl border border-[var(--line)] bg-white/60">
+            <form id="leadForm" class="grid grid-cols-1 gap-3 p-4" autocomplete="on">
               <div>
                 <label for="name" class="block text-xs font-medium text-[var(--muted)]">Nombre y apellido</label>
                 <input id="name" name="name" type="text" required
                   class="mt-1 w-full rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[var(--accent)]"
-                  placeholder="Tu nombre" />
+                  placeholder="Tu nombre" autocomplete="name" />
               </div>
               <div>
                 <label for="email" class="block text-xs font-medium text-[var(--muted)]">Email</label>
                 <input id="email" name="email" type="email" required
                   class="mt-1 w-full rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[var(--accent)]"
-                  placeholder="tucorreo@ejemplo.com" />
+                  placeholder="tucorreo@ejemplo.com" autocomplete="email" />
               </div>
               <div>
                 <label for="phone" class="block text-xs font-medium text-[var(--muted)]">WhatsApp / Teléfono (opcional)</label>
                 <input id="phone" name="phone" type="tel"
                   class="mt-1 w-full rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[var(--accent)]"
-                  placeholder="Ej: 11 5555-5555" />
+                  placeholder="Ej: 11 5555-5555" autocomplete="tel" />
               </div>
               <div>
                 <label for="message" class="block text-xs font-medium text-[var(--muted)]">Mensaje</label>
@@ -230,11 +176,12 @@
                   Acepto la <a href="#privacidad" class="underline underline-offset-2">política de privacidad</a>.
                 </label>
               </div>
-              <!-- Honeypot -->
+              <!-- Honeypot anti-spam -->
               <div class="hidden" aria-hidden="true">
                 <label for="company">Company</label>
                 <input id="company" name="company" type="text" tabindex="-1" autocomplete="off" />
               </div>
+
               <div class="flex items-center gap-3">
                 <button id="submitBtn" type="submit"
                   class="inline-flex items-center justify-center rounded-full bg-[var(--brand)] px-5 py-3 text-sm font-semibold text-[var(--brand-ink)] hover:opacity-95">
@@ -243,7 +190,7 @@
                 <span id="formStatus" class="text-xs text-[var(--muted)]"></span>
               </div>
             </form>
-          </details>
+          </div>
         </div>
       </section>
 
@@ -308,7 +255,7 @@
         el.className = "text-xs " + (type==="error" ? "text-red-600" : type==="success" ? "text-green-600" : "text-[var(--muted)]");
       }
 
-      // Fallback Instagram (si bloquea el iframe)
+      // Fallback Instagram (mapa bloqueado)
       (function(){
         try {
           var isIG = /Instagram|FBAN|FBAV/i.test(navigator.userAgent || "");
@@ -328,6 +275,7 @@
       // Init
       document.addEventListener('DOMContentLoaded', function(){
         try {
+          // Mensajes dinámicos
           var priceEl = document.getElementById("price");
           var priceText = priceEl ? (priceEl.textContent || "").trim() : "";
           var defaultMsg = 'Hola, me interesa la propiedad "' + title + '". ' +
