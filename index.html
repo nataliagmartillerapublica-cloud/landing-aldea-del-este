@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <title>Casa estilo patagónico – Aldea del Este</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <meta name="color-scheme" content="light only" />
     <meta name="description" content="Casa estilo patagónico con vista al lago en Bº Aldea del Este. 4 dormitorios, 190 m² cubiertos, lote 874 m²." />
@@ -21,7 +20,14 @@
       .container-w { max-width: 1100px; }
       .fade-enter { opacity: 0 }
       .fade-enter-active { opacity: 1; transition: opacity .2s ease }
-      .collapse { overflow: hidden; transition: max-height .3s ease, opacity .3s ease }
+      /* 🔧 FIX: el panel inicia oculto y con transición suave */
+      .collapse {
+        overflow: hidden;
+        transition: max-height .3s ease, opacity .3s ease;
+        display: none;          /* antes no estaba: evita medir 0 en algunos webviews */
+        opacity: 0;
+        max-height: 0;
+      }
     </style>
   </head>
 
@@ -186,7 +192,7 @@
           </div>
 
           <!-- Panel del formulario (colapsado por defecto) -->
-          <div id="formPanel" class="collapse mt-4 rounded-xl border border-[var(--line)] bg-white/60 max-h-0 opacity-0">
+          <div id="formPanel" class="collapse mt-4 rounded-xl border border-[var(--line)] bg-white/60">
             <form id="leadForm" class="grid grid-cols-1 gap-3 p-4">
               <div>
                 <label for="name" class="block text-xs font-medium text-[var(--muted)]">Nombre y apellido</label>
@@ -299,17 +305,32 @@
         el.textContent = text;
         el.className = "text-xs " + (type==="error" ? "text-red-600" : type==="success" ? "text-green-600" : "text-[var(--muted)]");
       }
-      function togglePanel(panel, expand) {
-        if (!panel) return;
-        if (expand) {
-          panel.classList.remove('max-h-0','opacity-0');
-          panel.style.maxHeight = panel.scrollHeight + 'px';
+
+      // 🔧 FIX robusto de apertura/cierre con reflow
+      function openPanel(panel) {
+        panel.style.display = 'block';
+        panel.style.opacity = '0';
+        panel.style.maxHeight = '0px';
+        // esperar un frame para que el navegador calcule layout
+        requestAnimationFrame(function(){
+          var h = panel.scrollHeight || 500; // fallback por si el webview devuelve 0
+          panel.style.maxHeight = h + 'px';
           panel.style.opacity = '1';
-        } else {
+        });
+      }
+      function closePanel(panel) {
+        // animar desde la altura actual a 0 y ocultar al final
+        var h = panel.scrollHeight || 0;
+        panel.style.maxHeight = h + 'px';
+        requestAnimationFrame(function(){
           panel.style.maxHeight = '0px';
           panel.style.opacity = '0';
-          panel.classList.add('max-h-0','opacity-0');
-        }
+        });
+        setTimeout(function(){ panel.style.display = 'none'; }, 350);
+      }
+      function togglePanel(panel, expand) {
+        if (!panel) return;
+        if (expand) openPanel(panel); else closePanel(panel);
       }
 
       // Fallback Instagram (si bloquea el iframe)
@@ -329,17 +350,16 @@
         } catch(e){ console.warn(e); }
       })();
 
-      // Init seguro
+      // Init
       document.addEventListener('DOMContentLoaded', function(){
         try {
-          // Precio y mensaje por defecto (dinámico)
           var priceEl = document.getElementById("price");
           var priceText = priceEl ? (priceEl.textContent || "").trim() : "";
           var defaultMsg = 'Hola, me interesa la propiedad "' + title + '". ' +
             (priceText ? ("Precio: " + priceText + ". ") : "") +
             "Vi el aviso en " + url + ". ¿Podemos coordinar una visita?";
 
-          // Enriquecer CTAs (si el DOM existe)
+          // Enriquecer CTAs
           var waHref = buildWaLink(WA_NUMBER, defaultMsg);
           var mailHref = buildMailto(EMAIL, "Consulta: " + title, defaultMsg);
           var waCta = document.getElementById("waCta");
@@ -360,7 +380,8 @@
           var cancelBtn = document.getElementById("cancelBtn");
           var formOpen = false;
 
-          if (formPanel) togglePanel(formPanel, false); // cerrado por defecto
+          // cerrado al cargar
+          if (formPanel) { formPanel.style.display = 'none'; formPanel.style.maxHeight = '0px'; formPanel.style.opacity = '0'; }
 
           if (formToggleBtn && formPanel) {
             formToggleBtn.addEventListener("click", function(){
