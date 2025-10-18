@@ -19,14 +19,6 @@
         --muted: #666666;
       }
       .container-w { max-width: 1100px; }
-      .force-visible {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        max-height: none !important;
-        height: auto !important;
-        overflow: visible !important;
-      }
     </style>
   </head>
 
@@ -72,9 +64,9 @@
             <strong>190 m²</strong>. Cochera doble. Fácil acceso y a 10 minutos del Centro de Bariloche.
           </p>
           <div class="mt-4 rounded-2xl border border-[var(--line)] bg-white p-4">
-            <strong>¿Querés coordinar una visita?</strong>
+            <strong>Contacto directo</strong>
             <p class="mt-1 text-xs text-[var(--muted)]">
-              Abajo tenés WhatsApp, Email y el formulario directo.
+              Escribime por WhatsApp o por email. (Formulario desactivado a pedido)
             </p>
           </div>
         </div>
@@ -121,75 +113,25 @@
         </div>
       </section>
 
-      <!-- CONTACTO -->
+      <!-- CONTACTO (solo WhatsApp y Email) -->
       <section id="consultas" class="mt-8">
-        <h2 class="mb-3 text-xl font-semibold">Contacto y consultas</h2>
+        <h2 class="mb-3 text-xl font-semibold">Contacto</h2>
 
         <div class="rounded-2xl border border-[var(--line)] bg-white p-4">
-          <p class="text-[15px]">Elegí el medio que prefieras o completá el formulario:</p>
-
-          <div class="mt-3 flex flex-col gap-3 sm:flex-row">
-            <!-- Fallbacks en el href -->
+          <div class="mt-1 flex flex-col gap-3 sm:flex-row">
+            <!-- WhatsApp -->
             <a id="waCta"
                href="https://api.whatsapp.com/send?phone=5492944635083&text=Hola%2C%20me%20interesa%20la%20propiedad."
                target="_blank" rel="noopener"
                class="inline-flex items-center justify-center rounded-full bg-[var(--brand)] px-5 py-3 text-sm font-semibold text-[var(--brand-ink)] hover:opacity-95">
               Escribime por WhatsApp
             </a>
+            <!-- Email -->
             <a id="emailCta"
                href="mailto:nataliagonzalezmartillerapublica@ngespacios.com.ar?subject=Consulta%20Casa%20Aldea%20del%20Este&body=Hola%2C%20me%20interesa%20la%20propiedad."
                class="inline-flex items-center justify-center rounded-full border border-[var(--ink)] px-5 py-3 text-sm font-medium text-[var(--ink)] hover:bg-black/5">
               Prefiero contacto por email
             </a>
-          </div>
-
-          <!-- FORM siempre visible -->
-          <div id="formBlock" class="force-visible mt-4 rounded-xl border border-[var(--line)] bg-white/60">
-            <form id="leadForm" class="grid grid-cols-1 gap-3 p-4" autocomplete="on">
-              <div>
-                <label for="name" class="block text-xs font-medium text-[var(--muted)]">Nombre y apellido</label>
-                <input id="name" name="name" type="text" required
-                  class="mt-1 w-full rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[var(--accent)]"
-                  placeholder="Tu nombre" autocomplete="name" />
-              </div>
-              <div>
-                <label for="email" class="block text-xs font-medium text-[var(--muted)]">Email</label>
-                <input id="email" name="email" type="email" required
-                  class="mt-1 w-full rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[var(--accent)]"
-                  placeholder="tucorreo@ejemplo.com" autocomplete="email" />
-              </div>
-              <div>
-                <label for="phone" class="block text-xs font-medium text-[var(--muted)]">WhatsApp / Teléfono (opcional)</label>
-                <input id="phone" name="phone" type="tel"
-                  class="mt-1 w-full rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[var(--accent)]"
-                  placeholder="Ej: 11 5555-5555" autocomplete="tel" />
-              </div>
-              <div>
-                <label for="message" class="block text-xs font-medium text-[var(--muted)]">Mensaje</label>
-                <textarea id="message" name="message" rows="4" required
-                  class="mt-1 w-full rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[var(--accent)]"
-                  placeholder="Contame cuándo te viene bien visitar o cualquier consulta."></textarea>
-              </div>
-              <div class="flex items-start gap-2">
-                <input id="consent" name="consent" type="checkbox" required class="mt-0.5" />
-                <label for="consent" class="text-xs text-[var(--muted)]">
-                  Acepto la <a href="#privacidad" class="underline underline-offset-2">política de privacidad</a>.
-                </label>
-              </div>
-              <!-- Honeypot anti-spam -->
-              <div class="hidden" aria-hidden="true">
-                <label for="company">Company</label>
-                <input id="company" name="company" type="text" tabindex="-1" autocomplete="off" />
-              </div>
-
-              <div class="flex items-center gap-3">
-                <button id="submitBtn" type="submit"
-                  class="inline-flex items-center justify-center rounded-full bg-[var(--brand)] px-5 py-3 text-sm font-semibold text-[var(--brand-ink)] hover:opacity-95">
-                  Enviar consulta
-                </button>
-                <span id="formStatus" class="text-xs text-[var(--muted)]"></span>
-              </div>
-            </form>
           </div>
         </div>
       </section>
@@ -236,10 +178,9 @@
       // ---------- Config ----------
       var WA_NUMBER = "5492944635083";
       var EMAIL = "nataliagonzalezmartillerapublica@ngespacios.com.ar";
-      var SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyHWZsCbXYLrMIpOnMEV-eLcEiCiZgUUXrW_yiVd_fsrmqvEBFJBIx5vzPtCvMNIYmdYw/exec";
 
       var title = "Casa estilo patagónico – Aldea del Este";
-      var url = window.location.href; // incluye UTMs
+      var url = window.location.href; // conserva UTMs si vienen
 
       function enc(s){ return encodeURIComponent(s); }
       function buildWaLink(number, text) {
@@ -248,14 +189,8 @@
       function buildMailto(email, subject, body) {
         return "mailto:" + email + "?subject=" + enc(subject) + "&body=" + enc(body);
       }
-      function setStatus(text, type) {
-        var el = document.getElementById("formStatus");
-        if (!el) return;
-        el.textContent = text;
-        el.className = "text-xs " + (type==="error" ? "text-red-600" : type==="success" ? "text-green-600" : "text-[var(--muted)]");
-      }
 
-      // Fallback Instagram (mapa bloqueado)
+      // Fallback de mapa para Instagram in-app
       (function(){
         try {
           var isIG = /Instagram|FBAN|FBAV/i.test(navigator.userAgent || "");
@@ -275,100 +210,26 @@
       // Init
       document.addEventListener('DOMContentLoaded', function(){
         try {
-          // Mensajes dinámicos
           var priceEl = document.getElementById("price");
           var priceText = priceEl ? (priceEl.textContent || "").trim() : "";
           var defaultMsg = 'Hola, me interesa la propiedad "' + title + '". ' +
             (priceText ? ("Precio: " + priceText + ". ") : "") +
             "Vi el aviso en " + url + ". ¿Podemos coordinar una visita?";
 
-          // Enriquecer CTAs (si el DOM existe)
+          // WhatsApp
           var waHref = buildWaLink(WA_NUMBER, defaultMsg);
-          var mailHref = buildMailto(EMAIL, "Consulta: " + title, defaultMsg);
           var waCta = document.getElementById("waCta");
           var waFloat = document.getElementById("waFloat");
-          var emailCta = document.getElementById("emailCta");
           if (waCta)   waCta.href = waHref;
           if (waFloat) waFloat.href = waHref;
-          if (emailCta) emailCta.href = mailHref;
+
+          // Email (mailto con mismo cuerpo)
+          var emailCta = document.getElementById("emailCta");
+          if (emailCta) emailCta.href = buildMailto(EMAIL, "Consulta: " + title, defaultMsg);
 
           // Año footer
           var yearEl = document.getElementById("year");
           if (yearEl) yearEl.textContent = String(new Date().getFullYear());
-
-          // Envío del FORM a Sheets
-          var leadForm = document.getElementById("leadForm");
-          if (leadForm) {
-            leadForm.addEventListener("submit", async function(e){
-              e.preventDefault();
-              setStatus("Enviando…");
-
-              var data = {
-                name:   (leadForm.name && leadForm.name.value || "").trim(),
-                email:  (leadForm.email && leadForm.email.value || "").trim(),
-                phone:  (leadForm.phone && leadForm.phone.value || "").trim(),
-                message:(leadForm.message && leadForm.message.value || "").trim(),
-                consent:(leadForm.consent && leadForm.consent.checked) || false,
-                company:(leadForm.company && leadForm.company.value) || "",
-                title:  title,
-                price:  priceText,
-                page:   url,
-                ts:     new Date().toISOString()
-              };
-
-              // UTMs/referrer
-              var p = new URLSearchParams(window.location.search || "");
-              data.utm_source   = p.get("utm_source")   || "";
-              data.utm_medium   = p.get("utm_medium")   || "";
-              data.utm_campaign = p.get("utm_campaign") || "";
-              data.utm_content  = p.get("utm_content")  || "";
-              data.utm_term     = p.get("utm_term")     || "";
-              data.referrer     = document.referrer || "";
-
-              // Validación
-              if (!data.name || !data.email || !data.message || !data.consent) {
-                setStatus("Completá los campos requeridos.", "error"); return;
-              }
-              if (data.company) { setStatus("Error de validación.", "error"); return; }
-
-              // Envío a Sheets
-              if (SHEETS_ENDPOINT) {
-                try {
-                  var res = await fetch(SHEETS_ENDPOINT, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(data)
-                  });
-                  if (!res.ok) throw new Error("HTTP " + res.status);
-                  setStatus("¡Consulta enviada! Te responderé a la brevedad.", "success");
-                  leadForm.reset();
-                  return;
-                } catch (err) {
-                  console.error("Sheets error:", err);
-                }
-              }
-
-              // Fallback: email
-              var body =
-                "Nombre: " + data.name + "\n" +
-                "Email: "  + data.email + "\n" +
-                "Teléfono: " + (data.phone || "-") + "\n" +
-                "Propiedad: " + data.title + "\n" +
-                "Precio: " + (data.price || "-") + "\n" +
-                "Página: " + data.page + "\n\n" +
-                "Mensaje:\n" + data.message + "\n\n" +
-                "Atribución:\n" +
-                "utm_source: " + data.utm_source + "\n" +
-                "utm_medium: " + data.utm_medium + "\n" +
-                "utm_campaign: " + data.utm_campaign + "\n" +
-                "utm_content: " + data.utm_content + "\n" +
-                "utm_term: " + data.utm_term + "\n" +
-                "referrer: " + data.referrer;
-
-              window.location.href = buildMailto(EMAIL, "Consulta: " + title, body);
-              setStatus("Abriendo tu app de correo…");
-            });
-          }
         } catch (err) {
           console.error("Init error:", err);
         }
