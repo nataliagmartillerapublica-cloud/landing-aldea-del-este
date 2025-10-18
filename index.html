@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <title>Casa estilo patagónico – Aldea del Este</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <meta name="color-scheme" content="light only" />
     <meta name="description" content="Casa estilo patagónico con vista al lago en Bº Aldea del Este. 4 dormitorios, 190 m² cubiertos, lote 874 m²." />
@@ -20,14 +21,20 @@
       .container-w { max-width: 1100px; }
       .fade-enter { opacity: 0 }
       .fade-enter-active { opacity: 1; transition: opacity .2s ease }
-      /* 🔧 FIX: el panel inicia oculto y con transición suave */
-      .collapse {
-        overflow: hidden;
-        transition: max-height .3s ease, opacity .3s ease;
-        display: none;          /* antes no estaba: evita medir 0 en algunos webviews */
-        opacity: 0;
-        max-height: 0;
+
+      /* Estilo del trigger del formulario (summary como botón) */
+      details.form-wrap > summary {
+        list-style: none;
+        cursor: pointer;
+        user-select: none;
       }
+      details.form-wrap > summary::-webkit-details-marker { display: none; }
+      details.form-wrap > summary .btn {
+        display: inline-flex; align-items: center; justify-content: center;
+        border-radius: 9999px; border: 1px solid var(--ink);
+        padding: 0.75rem 1.25rem; font-size: .875rem; font-weight: 500;
+      }
+      details.form-wrap[open] > summary .btn { background: #0000000a; }
     </style>
   </head>
 
@@ -185,14 +192,13 @@
                class="inline-flex items-center justify-center rounded-full border border-[var(--ink)] px-5 py-3 text-sm font-medium text-[var(--ink)] hover:bg-black/5">
               Prefiero contacto por email
             </a>
-            <button id="formToggleBtn" type="button"
-               class="inline-flex items-center justify-center rounded-full border border-[var(--ink)] px-5 py-3 text-sm font-medium text-[var(--ink)] hover:bg-black/5">
-              Completar formulario
-            </button>
           </div>
 
-          <!-- Panel del formulario (colapsado por defecto) -->
-          <div id="formPanel" class="collapse mt-4 rounded-xl border border-[var(--line)] bg-white/60">
+          <!-- FORM con <details> (cerrado por defecto, sin JS para abrir) -->
+          <details class="form-wrap mt-4 rounded-xl border border-[var(--line)] bg-white/60">
+            <summary class="p-3">
+              <span class="btn">Completar formulario</span>
+            </summary>
             <form id="leadForm" class="grid grid-cols-1 gap-3 p-4">
               <div>
                 <label for="name" class="block text-xs font-medium text-[var(--muted)]">Nombre y apellido</label>
@@ -234,14 +240,10 @@
                   class="inline-flex items-center justify-center rounded-full bg-[var(--brand)] px-5 py-3 text-sm font-semibold text-[var(--brand-ink)] hover:opacity-95">
                   Enviar consulta
                 </button>
-                <button id="cancelBtn" type="button"
-                  class="inline-flex items-center justify-center rounded-full border border-[var(--ink)] px-5 py-3 text-sm font-medium text-[var(--ink)] hover:bg-black/5">
-                  Cancelar
-                </button>
                 <span id="formStatus" class="text-xs text-[var(--muted)]"></span>
               </div>
             </form>
-          </div>
+          </details>
         </div>
       </section>
 
@@ -306,33 +308,6 @@
         el.className = "text-xs " + (type==="error" ? "text-red-600" : type==="success" ? "text-green-600" : "text-[var(--muted)]");
       }
 
-      // 🔧 FIX robusto de apertura/cierre con reflow
-      function openPanel(panel) {
-        panel.style.display = 'block';
-        panel.style.opacity = '0';
-        panel.style.maxHeight = '0px';
-        // esperar un frame para que el navegador calcule layout
-        requestAnimationFrame(function(){
-          var h = panel.scrollHeight || 500; // fallback por si el webview devuelve 0
-          panel.style.maxHeight = h + 'px';
-          panel.style.opacity = '1';
-        });
-      }
-      function closePanel(panel) {
-        // animar desde la altura actual a 0 y ocultar al final
-        var h = panel.scrollHeight || 0;
-        panel.style.maxHeight = h + 'px';
-        requestAnimationFrame(function(){
-          panel.style.maxHeight = '0px';
-          panel.style.opacity = '0';
-        });
-        setTimeout(function(){ panel.style.display = 'none'; }, 350);
-      }
-      function togglePanel(panel, expand) {
-        if (!panel) return;
-        if (expand) openPanel(panel); else closePanel(panel);
-      }
-
       // Fallback Instagram (si bloquea el iframe)
       (function(){
         try {
@@ -359,7 +334,7 @@
             (priceText ? ("Precio: " + priceText + ". ") : "") +
             "Vi el aviso en " + url + ". ¿Podemos coordinar una visita?";
 
-          // Enriquecer CTAs
+          // Enriquecer CTAs (si el DOM existe)
           var waHref = buildWaLink(WA_NUMBER, defaultMsg);
           var mailHref = buildMailto(EMAIL, "Consulta: " + title, defaultMsg);
           var waCta = document.getElementById("waCta");
@@ -373,33 +348,8 @@
           var yearEl = document.getElementById("year");
           if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
-          // Form & panel
-          var formPanel = document.getElementById("formPanel");
-          var formToggleBtn = document.getElementById("formToggleBtn");
+          // Envío del FORM a Sheets
           var leadForm = document.getElementById("leadForm");
-          var cancelBtn = document.getElementById("cancelBtn");
-          var formOpen = false;
-
-          // cerrado al cargar
-          if (formPanel) { formPanel.style.display = 'none'; formPanel.style.maxHeight = '0px'; formPanel.style.opacity = '0'; }
-
-          if (formToggleBtn && formPanel) {
-            formToggleBtn.addEventListener("click", function(){
-              formOpen = !formOpen;
-              togglePanel(formPanel, formOpen);
-              formToggleBtn.textContent = formOpen ? "Ocultar formulario" : "Completar formulario";
-            });
-          }
-          if (cancelBtn && formPanel) {
-            cancelBtn.addEventListener("click", function(){
-              formOpen = false;
-              togglePanel(formPanel, false);
-              if (formToggleBtn) formToggleBtn.textContent = "Completar formulario";
-              if (leadForm) leadForm.reset();
-              setStatus("");
-            });
-          }
-
           if (leadForm) {
             leadForm.addEventListener("submit", async function(e){
               e.preventDefault();
@@ -447,7 +397,6 @@
                   return;
                 } catch (err) {
                   console.error("Sheets error:", err);
-                  // sigue al fallback email
                 }
               }
 
@@ -469,7 +418,7 @@
                 "referrer: " + data.referrer;
 
               window.location.href = buildMailto(EMAIL, "Consulta: " + title, body);
-              setStatus("Abriendo tu app de correo…", "info");
+              setStatus("Abriendo tu app de correo…");
             });
           }
         } catch (err) {
