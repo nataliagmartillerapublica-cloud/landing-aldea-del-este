@@ -169,13 +169,13 @@
           <div class="mt-3 flex flex-col gap-3 sm:flex-row">
             <!-- Fallback HREFs por si el JS no carga -->
             <a id="waCta"
-               href="https://api.whatsapp.com/send?phone=5492944635083"
+               href="https://api.whatsapp.com/send?phone=5492944635083&text=Hola%2C%20me%20interesa%20la%20propiedad."
                target="_blank" rel="noopener"
                class="inline-flex items-center justify-center rounded-full bg-[var(--brand)] px-5 py-3 text-sm font-semibold text-[var(--brand-ink)] hover:opacity-95">
               Escribime por WhatsApp
             </a>
             <a id="emailCta"
-               href="mailto:nataliagonzalezmartillerapublica@ngespacios.com.ar?subject=Consulta%20Casa%20Aldea%20del%20Este"
+               href="mailto:nataliagonzalezmartillerapublica@ngespacios.com.ar?subject=Consulta%20Casa%20Aldea%20del%20Este&body=Hola%2C%20me%20interesa%20la%20propiedad."
                class="inline-flex items-center justify-center rounded-full border border-[var(--ink)] px-5 py-3 text-sm font-medium text-[var(--ink)] hover:bg-black/5">
               Prefiero contacto por email
             </a>
@@ -271,7 +271,7 @@
 
     <!-- CTA flotante (mobile) -->
     <a id="waFloat"
-       href="https://api.whatsapp.com/send?phone=5492944635083"
+       href="https://api.whatsapp.com/send?phone=5492944635083&text=Hola%2C%20me%20interesa%20la%20propiedad."
        target="_blank" rel="noopener"
        class="fixed inset-x-4 bottom-4 sm:hidden inline-flex items-center justify-center rounded-full bg-[var(--brand)] px-5 py-3 text-sm font-semibold text-[var(--brand-ink)] shadow-lg hover:opacity-95">
       Escribime por WhatsApp
@@ -281,14 +281,13 @@
       // ---------- Config ----------
       var WA_NUMBER = "5492944635083";
       var EMAIL = "nataliagonzalezmartillerapublica@ngespacios.com.ar";
-      var SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyPjlCrv6A2pkzOWPNXzcVYeA6fjJdS8vep9Ki8mo_7mrmx-JTTOM9XYDrYbEzz_LX2eQ/exec";
+      var SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycbwycKVrovewBh_wDg9sxoKJ6lsEjpd8EkHzi6_QuMI-uUs2G6LQQHO6ZoIjCiT0uG1JyQ/exec";
 
       var title = "Casa estilo patagónico – Aldea del Este";
-      var url = window.location.origin + window.location.pathname;
+      var url = window.location.href; // incluye UTMs
 
       function enc(s){ return encodeURIComponent(s); }
       function buildWaLink(number, text) {
-        // api.whatsapp.com es más compatible en móviles/IG
         return "https://api.whatsapp.com/send?phone=" + number + "&text=" + enc(text);
       }
       function buildMailto(email, subject, body) {
@@ -333,14 +332,14 @@
       // Init seguro
       document.addEventListener('DOMContentLoaded', function(){
         try {
-          // Precio y mensaje por defecto
+          // Precio y mensaje por defecto (dinámico)
           var priceEl = document.getElementById("price");
           var priceText = priceEl ? (priceEl.textContent || "").trim() : "";
           var defaultMsg = 'Hola, me interesa la propiedad "' + title + '". ' +
             (priceText ? ("Precio: " + priceText + ". ") : "") +
             "Vi el aviso en " + url + ". ¿Podemos coordinar una visita?";
 
-          // Setear/enriquecer CTAs (si el DOM existe)
+          // Enriquecer CTAs (si el DOM existe)
           var waHref = buildWaLink(WA_NUMBER, defaultMsg);
           var mailHref = buildMailto(EMAIL, "Consulta: " + title, defaultMsg);
           var waCta = document.getElementById("waCta");
@@ -413,14 +412,13 @@
               }
               if (data.company) { setStatus("Error de validación.", "error"); return; }
 
-              // Envío a Sheets si hay endpoint
+              // Envío a Sheets
               if (SHEETS_ENDPOINT) {
                 try {
                   var res = await fetch(SHEETS_ENDPOINT, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(data),
-                    mode: "cors"
+                    body: JSON.stringify(data)
                   });
                   if (!res.ok) throw new Error("HTTP " + res.status);
                   setStatus("¡Consulta enviada! Te responderé a la brevedad.", "success");
